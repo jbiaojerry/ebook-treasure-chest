@@ -1,5 +1,0 @@
-# AWS
-
-| 书名 | epub | mobi | azw3 |
-| --- | --- | --- | --- |
-| [AWS云计算实战](http://ct.dalanmei.com/f/31084289-572125194-c54f2e) | [epub](http://ct.dalanmei.com/f/31084289-572125194-c54f2e) | [mobi](http://ct.dalanmei.com/f/31084289-571635155-f73d3f) | [azw3](http://ct.dalanmei.com/f/31084289-572185469-1311fb) |

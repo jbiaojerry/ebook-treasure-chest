@@ -1,6 +1,10 @@
+# 版权声明
+
+本站内容均从网上搜集，版权归著作人及版权方所有，如侵犯您的权益，请通知我们，我们将会及时删除！ 下载链接仅供宽带测试研究用途，请下载后在24小时内删除，请勿用于商业目的。请支持正版！
+
 # OKR
 
-| 书名 | epub | mobi | azw3 |
-| --- | --- | --- | --- |
-| [绩效使能：超越OKR](http://ct.dalanmei.com/f/31084289-571774977-b51e80) | [epub](http://ct.dalanmei.com/f/31084289-571774977-b51e80) | [mobi](http://ct.dalanmei.com/f/31084289-571498855-307918) | [azw3](http://ct.dalanmei.com/f/31084289-571919760-2c081d) |
-| [OKR：源于英特尔和谷歌的目标管理利器](http://ct.dalanmei.com/f/31084289-571738139-478c49) | [epub](http://ct.dalanmei.com/f/31084289-571738139-478c49) | [mobi](http://ct.dalanmei.com/f/31084289-571588368-a14c0a) | [azw3](http://ct.dalanmei.com/f/31084289-571868340-113de9) |
+| 书名 | 作者 | epub/mobi/azw3 |
+| --- | --- | --- |
+| [绩效使能：超越OKR (点击查看图片)](https://www.dushupai.com/attachment/2024/06/06/af2720c2fd46905b.jpg) | 况阳 | [下载](https://url89.ctfile.com/f/31084289-1357031344-240881?p=8866) |
+| [OKR：源于英特尔和谷歌的目标管理利器 (点击查看图片)](https://www.dushupai.com/attachment/2024/06/03/57d06925908626e4.jpg) | 保罗・尼文/本・拉莫尔特 | [下载](https://url89.ctfile.com/f/31084289-1357016284-d23741?p=8866) |

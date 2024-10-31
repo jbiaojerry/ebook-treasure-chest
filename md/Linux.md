@@ -1,8 +1,12 @@
+# 版权声明
+
+本站内容均从网上搜集，版权归著作人及版权方所有，如侵犯您的权益，请通知我们，我们将会及时删除！ 下载链接仅供宽带测试研究用途，请下载后在24小时内删除，请勿用于商业目的。请支持正版！
+
 # Linux
 
-| 书名 | epub | mobi | azw3 |
-| --- | --- | --- | --- |
-| [鸟哥的Linux私房菜：基础学习篇（第三版）](http://ct.dalanmei.com/f/31084289-571876760-4de0a4) | [epub](http://ct.dalanmei.com/f/31084289-571876760-4de0a4) | [mobi](http://ct.dalanmei.com/f/31084289-571551600-f271c5) | [azw3](http://ct.dalanmei.com/f/31084289-572068620-84298a) |
-| [鸟哥的Linux私房菜：服务器架设篇（第三版）](http://ct.dalanmei.com/f/31084289-571876925-407c2a) | [epub](http://ct.dalanmei.com/f/31084289-571876925-407c2a) | [mobi](http://ct.dalanmei.com/f/31084289-571551613-7fba3d) | [azw3](http://ct.dalanmei.com/f/31084289-572068657-c879cf) |
-| [Linux就该这么学](http://ct.dalanmei.com/f/31084289-571918039-62e1a8) | [epub](http://ct.dalanmei.com/f/31084289-571918039-62e1a8) | [mobi](http://ct.dalanmei.com/f/31084289-571558468-5b9ff3) | [azw3](http://ct.dalanmei.com/f/31084289-572075545-dc1e30) |
-| [Linux环境编程：从应用到内核](http://ct.dalanmei.com/f/31084289-571732721-015efa) | [epub](http://ct.dalanmei.com/f/31084289-571732721-015efa) | [mobi](http://ct.dalanmei.com/f/31084289-571586300-6cef98) | [azw3](http://ct.dalanmei.com/f/31084289-571847801-a9a03b) |
+| 书名 | 作者 | epub/mobi/azw3 |
+| --- | --- | --- |
+| [鸟哥的Linux私房菜：基础学习篇（第三版） (点击查看图片)](https://www.dushupai.com/attachment/2024/06/04/bb57da239e8d3394.jpg) | 鸟哥 | [下载](https://url89.ctfile.com/f/31084289-1357022668-37c4df?p=8866) |
+| [鸟哥的Linux私房菜：服务器架设篇（第三版） (点击查看图片)](https://www.dushupai.com/attachment/2024/06/04/0786f046e21f36a2.jpg) | 鸟哥 | [下载](https://url89.ctfile.com/f/31084289-1357022671-598d7f?p=8866) |
+| [Linux就该这么学 (点击查看图片)](https://www.dushupai.com/attachment/2024/06/04/fa043f7469e18dfb.jpg) | 刘遄 | [下载](https://url89.ctfile.com/f/31084289-1357020865-7cfd40?p=8866) |
+| [Linux环境编程：从应用到内核 (点击查看图片)](https://www.dushupai.com/attachment/2024/06/03/c2b5ae011c0c4be8.jpg) | 高峰 | [下载](https://url89.ctfile.com/f/31084289-1357019278-91aa23?p=8866) |
