@@ -8,7 +8,7 @@ on:
     branches: [ main ]
     paths: [ 'md/**' ]
   schedule:
-    # 每天凌晨2点执行一次
+    # 每天凌晨2点执行一次 (Runs at 2 AM every day)
     - cron: '0 2 * * *'
   workflow_dispatch:
 
@@ -16,37 +16,67 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
+    # 授予 Job 推送代码的权限 (Grant the job permissions to push code)
+    permissions:
+      contents: write
+
     steps:
+    # 步骤1: 检出仓库代码 (Step 1: Checkout repository code)
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
+        # 使用 GITHUB_TOKEN 以便后续可以推送代码 (Use GITHUB_TOKEN to allow pushing code later)
         token: ${{ secrets.GITHUB_TOKEN }}
     
+    # 步骤2: 设置 Node.js 环境 (Step 2: Setup Node.js environment)
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
         cache: 'npm'
+        # 根据 scripts 目录下的 lock 文件缓存依赖 (Cache dependencies based on the lock file in the scripts directory)
         cache-dependency-path: 'scripts/package-lock.json'
     
+    # 步骤3: 安装依赖 (Step 3: Install dependencies)
     - name: Install dependencies
       run: |
+        echo "==> Entering 'scripts' directory..."
         cd scripts
+        echo "==> Installing dependencies with 'npm ci'..."
         npm ci
     
+    # 步骤4: 构建搜索索引 (Step 4: Build search index)
     - name: Build search index
       run: |
+        echo "==> Entering 'scripts' directory..."
         cd scripts
+        echo "==> Running build script 'npm run build'..."
         npm run build
-    
+        
+    # 步骤5: 查看生成的文件 (用于调试) (Step 5: Check generated files for debugging)
+    - name: List generated files
+      run: |
+        echo "==> Checking 'docs' directory contents..."
+        ls -R docs
+        
+    # 步骤6: 提交并推送变更 (Step 6: Commit and push changes)
     - name: Commit and push changes
       run: |
+        # 配置 Git 用户信息 (Configure Git user information)
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
+        
+        # 添加新生成的数据文件到暂存区 (Add newly generated data files to the staging area)
         git add docs/data/
+        
+        # 检查是否有变更需要提交 (Check if there are changes to commit)
         if git diff --staged --quiet; then
-          echo "No changes to commit"
+          echo "No file changes to commit."
         else
+          echo "Detected file changes. Committing and pushing..."
+          # 提交变更, [skip ci] 防止触发循环构建 (Commit changes, [skip ci] prevents loop builds)
           git commit -m "Auto-update search index [skip ci]"
+          # 推送变更到仓库 (Push changes to the repository)
           git push
+          echo "Changes have been pushed successfully."
         fi
