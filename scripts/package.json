@@ -3,15 +3,17 @@
   "version": "1.0.0",
   "main": "build-index.js",
   "scripts": {
+    "build": "node build-index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Build scripts for search index generation",
   "dependencies": {
     "fs-extra": "^11.3.0",
     "lunr": "^2.3.9",
+    "markdown-table-parser": "^1.0.2",
     "pinyin": "^4.0.0"
   }
 }

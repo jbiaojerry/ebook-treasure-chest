@@ -27,17 +27,17 @@ jobs:
       with:
         node-version: '18'
         cache: 'npm'
+        cache-dependency-path: 'scripts/package-lock.json'
     
     - name: Install dependencies
       run: |
         cd scripts
-        npm init -y
-        npm install lunr fs-extra markdown-table-parser pinyin
+        npm ci
     
     - name: Build search index
       run: |
         cd scripts
-        node build-index.js
+        npm run build
     
     - name: Commit and push changes
       run: |
