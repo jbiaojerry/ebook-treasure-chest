@@ -74,8 +74,8 @@ jobs:
       with:
         # 提交信息 (Commit message)
         commit_message: "Auto-update search index [skip ci]"
-        # 要添加的文件模式，这里指定 data 目录下的所有文件 (File pattern to add, specifies all files under the data directory)
-        file_pattern: docs/data/*
+        # 要添加的文件/目录模式，这里指定 data 目录下的所有内容 (File/directory pattern to add, specifies all content under the data directory)
+        file_pattern: docs/data/
         # Git 用户名 (Git user name)
         commit_user_name: GitHub Action
         # Git 用户邮箱 (Git user email)
