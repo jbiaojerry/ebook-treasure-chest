@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电子书宝藏库 - 搜索</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="title">
+                <span class="icon">📚</span>
+                电子书宝藏库
+            </h1>
+            <p class="subtitle">发现你想要的好书</p>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- 搜索区域 -->
+            <div class="search-section">
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="搜索书名、作者或分类..."
+                        autocomplete="off"
+                    >
+                    <button id="searchButton" class="search-btn">
+                        <span class="search-icon">🔍</span>
+                        搜索
+                    </button>
+                </div>
+                
+                <!-- 搜索提示 -->
+                <div class="search-tips">
+                    <span class="tip">💡 支持拼音搜索，如输入 "lishi" 可搜到历史类书籍</span>
+                </div>
+                
+                <!-- 快速分类导航 -->
+                <div class="category-nav" id="categoryNav">
+                    <div class="nav-title">热门分类：</div>
+                    <div class="nav-items" id="navItems">
+                        <!-- 动态加载分类 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 统计信息 -->
+            <div class="stats-section" id="statsSection">
+                <div class="stats-item">
+                    <span class="stats-number" id="totalBooks">-</span>
+                    <span class="stats-label">本书籍</span>
+                </div>
+                <div class="stats-item">
+                    <span class="stats-number" id="totalCategories">-</span>
+                    <span class="stats-label">个分类</span>
+                </div>
+                <div class="stats-item">
+                    <span class="stats-number" id="lastUpdated">-</span>
+                    <span class="stats-label">最后更新</span>
+                </div>
+            </div>
+
+            <!-- 搜索结果 -->
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h2 id="resultsTitle">搜索结果</h2>
+                    <div class="results-count" id="resultsCount"></div>
+                </div>
+                <div class="results-container" id="resultsContainer">
+                    <!-- 搜索结果将在这里动态显示 -->
+                </div>
+                <div class="pagination" id="pagination">
+                    <!-- 分页控件 -->
+                </div>
+            </div>
+
+            <!-- 分类浏览 -->
+            <div class="browse-section" id="browseSection">
+                <h2>按分类浏览</h2>
+                <div class="category-grid" id="categoryGrid">
+                    <!-- 动态加载分类网格 -->
+                </div>
+            </div>
+
+            <!-- 加载状态 -->
+            <div class="loading" id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>正在搜索...</p>
+            </div>
+
+            <!-- 空状态 -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">📭</div>
+                <h3>没有找到相关书籍</h3>
+                <p>试试调整搜索关键词，或浏览其他分类</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 电子书宝藏库. 本站内容均从网上搜集，仅供学习研究使用.</p>
+            <p>
+                <a href="https://github.com" target="_blank" rel="noopener">GitHub</a> |
+                <a href="#" onclick="toggleDarkMode()">🌙 深色模式</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- 引入搜索脚本 -->
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+    <script src="search.js"></script>
+
+    <script>
+        // 深色模式切换
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        // 页面加载时恢复深色模式设置
+        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+        });
+    </script>
+</body>
+</html>
