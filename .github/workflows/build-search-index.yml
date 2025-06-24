@@ -62,6 +62,12 @@ jobs:
         echo "==> Checking 'docs' directory contents..."
         ls -R docs
         
+    # 新增步骤: 检查 Git 状态 (用于深度调试) (New Step: Check Git status for deep debugging)
+    - name: Check git status
+      run: |
+        set -x
+        git status
+
     # 步骤6: 提交并推送变更 (采用更稳定的专业 Action) (Step 6: Commit and push changes using a more stable and professional action)
     - name: Commit and push changes
       uses: stefanzweifel/git-auto-commit-action@v5
