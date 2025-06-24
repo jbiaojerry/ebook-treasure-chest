@@ -62,21 +62,15 @@ jobs:
         echo "==> Checking 'docs' directory contents..."
         ls -R docs
         
-    # 新增步骤: 检查 Git 状态 (用于深度调试) (New Step: Check Git status for deep debugging)
-    - name: Check git status
-      run: |
-        set -x
-        git status
-
-    # 步骤6: 提交并推送变更 (采用更稳定的专业 Action) (Step 6: Commit and push changes using a more stable and professional action)
-    - name: Commit and push changes
-      uses: stefanzweifel/git-auto-commit-action@v5
+    # 步骤6: 部署到 GitHub Pages 分支 (Step 6: Deploy to GitHub Pages branch)
+    - name: Deploy to GitHub Pages branch
+      uses: peaceiris/actions-gh-pages@v4
       with:
-        # 提交信息 (Commit message)
-        commit_message: "Auto-update search index [skip ci]"
-        # 要添加的文件/目录模式，这里指定 data 目录下的所有内容 (File/directory pattern to add, specifies all content under the data directory)
-        file_pattern: docs/data/
-        # Git 用户名 (Git user name)
-        commit_user_name: GitHub Action
-        # Git 用户邮箱 (Git user email)
-        commit_user_email: action@github.com
+        # 用于认证的令牌 (Token for authentication)
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        # 要部署的目标分支，如果不存在则会自动创建 (The target branch to deploy to, will be created if it doesn't exist)
+        publish_branch: github-page-source
+        # 要部署的目录，它将成为目标分支的根目录 (The directory to deploy, which will become the root of the target branch)
+        publish_dir: ./docs
+        # 自定义提交信息 (Custom commit message)
+        commit_message: "Deploy updated docs to github-page-source [skip ci]"
