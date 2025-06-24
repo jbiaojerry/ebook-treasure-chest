@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 // 仅加载初始元数据
 async function loadInitialData() {
     try {
-        showLoading(true);
+        showLoading(true, '正在初始化应用...');
         const response = await fetch('data/meta.json');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -53,8 +53,7 @@ async function loadAllBooks() {
     if (allBooksCache) {
         return allBooksCache;
     }
-
-    showLoading(true);
+    // 注意：此函数现在不再负责显示加载状态，调用者需要处理
     try {
         const categories = metaData.categories;
         const fetchPromises = categories.map(category => 
@@ -80,9 +79,7 @@ async function loadAllBooks() {
     } catch (error) {
         console.error('加载全量书籍数据时出错:', error);
         showError('搜索数据加载时出错，请稍后重试');
-        return [];
-    } finally {
-        showLoading(false);
+        return null; // 返回 null 表示出错
     }
 }
 
@@ -90,6 +87,7 @@ async function loadAllBooks() {
 function setupEventListeners() {
     searchInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
+            e.preventDefault(); // 阻止表单的默认提交行为
             handleSearch();
         }
     });
@@ -105,7 +103,7 @@ function setupEventListeners() {
 }
 
 // 处理搜索
-async function handleSearch() {
+function handleSearch() {
     const query = searchInput.value.trim().toLowerCase();
     
     if (!query) {
@@ -114,25 +112,40 @@ async function handleSearch() {
     }
     
     if (!metaData) {
-        console.error('元数据未加载完成');
+        showError('页面尚未初始化完成，请稍候。');
         return;
     }
-    
-    const allBooks = await loadAllBooks();
-    if (!allBooks) return;
 
-    currentResults = allBooks.filter(book => 
-        book.title.toLowerCase().includes(query) || 
-        book.author.toLowerCase().includes(query)
-    );
+    // 显示加载状态，并用 setTimeout 确保 UI 能够渲染
+    showLoading(true, '正在搜索中，首次搜索可能需要一点时间...');
     
-    currentPage = 1;
-    displaySearchResults(`关键词: ${searchInput.value.trim()}`);
+    setTimeout(async () => {
+        try {
+            const allBooks = await loadAllBooks();
+            if (allBooks === null) { // 如果加载出错
+                showLoading(false);
+                return;
+            }
+
+            currentResults = allBooks.filter(book => 
+                book.title.toLowerCase().includes(query) || 
+                book.author.toLowerCase().includes(query)
+            );
+            
+            currentPage = 1;
+            displaySearchResults(`关键词: ${searchInput.value.trim()}`);
+        } catch (error) {
+            console.error('搜索时发生错误:', error);
+            showError('搜索时发生未知错误，请重试。');
+        } finally {
+            showLoading(false);
+        }
+    }, 10);
 }
 
 // 按分类搜索
 async function searchByCategory(category) {
-    showLoading(true);
+    showLoading(true, `正在加载分类: ${category}...`);
     try {
         const response = await fetch(`data/books/${category}.json`);
         if (!response.ok) throw new Error('分类数据加载失败');
@@ -287,8 +300,18 @@ function hideAllSections() {
     emptyState.style.display = 'none';
     statsSection.style.display = 'none';
 }
-function showLoading(show) {
-    loading.style.display = show ? 'flex' : 'none';
+function showLoading(show, message = '加载中...') {
+    // 为了显示自定义消息, 请确保您的 index.html 中 #loading 元素内有一个 id 为 'loading-message' 的子元素
+    // 例如: <div id="loading"><div class="spinner"></div><span id="loading-message"></span></div>
+    const loadingMessageEl = document.getElementById('loading-message');
+    if (show) {
+        if (loadingMessageEl) {
+            loadingMessageEl.textContent = message;
+        }
+        loading.style.display = 'flex';
+    } else {
+        loading.style.display = 'none';
+    }
 }
 function showError(message) {
     alert(message);
