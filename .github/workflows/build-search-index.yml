@@ -40,6 +40,7 @@ jobs:
     # 步骤3: 安装依赖 (Step 3: Install dependencies)
     - name: Install dependencies
       run: |
+        set -x # 开启调试模式，打印每条执行的命令 (Enable debug mode to print each command)
         echo "==> Entering 'scripts' directory..."
         cd scripts
         echo "==> Installing dependencies with 'npm ci'..."
@@ -48,6 +49,7 @@ jobs:
     # 步骤4: 构建搜索索引 (Step 4: Build search index)
     - name: Build search index
       run: |
+        set -x # 开启调试模式 (Enable debug mode)
         echo "==> Entering 'scripts' directory..."
         cd scripts
         echo "==> Running build script 'npm run build'..."
@@ -56,12 +58,14 @@ jobs:
     # 步骤5: 查看生成的文件 (用于调试) (Step 5: Check generated files for debugging)
     - name: List generated files
       run: |
+        set -x # 开启调试模式 (Enable debug mode)
         echo "==> Checking 'docs' directory contents..."
         ls -R docs
         
     # 步骤6: 提交并推送变更 (Step 6: Commit and push changes)
     - name: Commit and push changes
       run: |
+        set -x # 开启调试模式 (Enable debug mode)
         # 配置 Git 用户信息 (Configure Git user information)
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
