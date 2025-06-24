@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const lunr = require('lunr');
-const pinyin = require('pinyin');
+const { pinyin } = require('pinyin');
 
 // 中文分词和拼音处理
 function processChinese(text) {
@@ -9,7 +9,7 @@ function processChinese(text) {
     
     // 转换为拼音
     const pinyinArray = pinyin(text, {
-        style: pinyin.STYLE_NORMAL,
+        style: 'normal',
         heteronym: false
     });
     

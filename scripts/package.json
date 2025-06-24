@@ -1,17 +1,16 @@
 {
-  "name": "scripts",
+  "name": "ebook-search-builder",
   "version": "1.0.0",
+  "description": "Builds search index for the ebook treasure chest",
   "main": "build-index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node build-index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "fs-extra": "^11.3.0",
+    "fs-extra": "^11.2.0",
     "lunr": "^2.3.9",
-    "pinyin": "^4.0.0"
-  }
+    "pinyin": "^3.1.0"
+  },
+  "author": "",
+  "license": "ISC"
 }
