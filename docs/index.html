@@ -90,7 +90,7 @@
             <!-- 加载状态 -->
             <div class="loading" id="loading" style="display: none;">
                 <div class="spinner"></div>
-                <p>正在搜索...</p>
+                <span id="loading-message"></span>
             </div>
 
             <!-- 空状态 -->
@@ -113,7 +113,6 @@
     </footer>
 
     <!-- 引入搜索脚本 -->
-    <script src="https://unpkg.com/lunr/lunr.js"></script>
     <script src="search.js"></script>
 
     <script>
