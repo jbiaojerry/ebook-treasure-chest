@@ -1,0 +1,52 @@
+name: Build Search Index
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'md/**' ]
+  pull_request:
+    branches: [ main ]
+    paths: [ 'md/**' ]
+  schedule:
+    # 每天凌晨2点执行一次
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: |
+        cd scripts
+        npm init -y
+        npm install lunr fs-extra markdown-table-parser pinyin
+    
+    - name: Build search index
+      run: |
+        cd scripts
+        node build-index.js
+    
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add docs/data/
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Auto-update search index [skip ci]"
+          git push
+        fi
