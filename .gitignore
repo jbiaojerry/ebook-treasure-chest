@@ -63,7 +63,7 @@ docs/data/books-index.json
 docs/data/search-index.json
 
 # NPM/Yarn files
-package-lock.json
+# package-lock.json
 yarn.lock
 
 # Runtime data
