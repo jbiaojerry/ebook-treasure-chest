@@ -30,7 +30,7 @@ function parseMarkdownTable(content) {
             const cells = trimmedLine.split('|').map(cell => cell.trim()).filter(cell => cell);
             
             if (cells.length >= 3) {
-                const title = extractTextFromMarkdown(cells[0]);
+                const title = extractTextFromMarkdown(cells[0]).replace(/\(点击查看图片\)/g, '');
                 const author = extractTextFromMarkdown(cells[1]);
                 const downloadUrl = extractLinkFromMarkdown(cells[2]);
                 
