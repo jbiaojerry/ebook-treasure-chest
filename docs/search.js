@@ -1,3 +1,88 @@
+// ====== 模块划分重构 Begin ======
+
+// -- 数据模块 --
+const DataModule = (() => {
+    let metaData = null, allBooksCache = null;
+
+    async function loadMeta() {
+        try {
+            const response = await fetch('data/meta.json', { cache: 'no-store' });
+            if (!response.ok) throw new Error(`元数据加载失败 (${response.status})`);
+            metaData = await response.json();
+            if (!metaData.categories || !Array.isArray(metaData.categories)) throw new Error('元数据缺少分类信息');
+            return metaData;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    async function loadAllBooks(categories) {
+        if (allBooksCache) return allBooksCache;
+        if (!categories || !categories.length) return [];
+        try {
+            const fetches = categories.map(category =>
+                fetch(`data/books/${category}.json`).then(res => {
+                    if (!res.ok) return [];
+                    return res.json().then(books => Array.isArray(books) ? books.map(b => ({...b, category})) : []);
+                }).catch(() => [])
+            );
+            const results = await Promise.allSettled(fetches);
+            allBooksCache = results.filter(r => r.status === 'fulfilled').flatMap(r => r.value);
+            return allBooksCache;
+        } catch (e) {
+            return [];
+        }
+    }
+
+    return { loadMeta, loadAllBooks };
+})();
+
+// -- 视图模块 --
+const ViewModule = (() => {
+    function safeGet(id) { return document.getElementById(id); }
+
+    function showLoading(show, message = '加载中...') {
+        const loading = safeGet('loading');
+        const m = safeGet('loading-message');
+        if (loading) loading.style.display = show ? 'flex' : 'none';
+        if (m && show) m.textContent = message;
+    }
+
+    function showError(message, onRetry) {
+        // 页面统一错误区块（如无则 alert 兜底），优先使用 emptyState 区
+        const empty = safeGet('emptyState');
+        const container = safeGet('resultsContainer');
+        if (empty) {
+            empty.style.display = 'block';
+            empty.innerHTML = `
+                <div class="empty-icon">⚠️</div>
+                <h3>发生错误</h3>
+                <p>${message || '出现未知异常'}</p>
+                ${onRetry ? `<button id="retryBtn" class="retry-btn">重试</button>` : ''}
+            `;
+            if (container) container.innerHTML = '';
+            if (onRetry) {
+                setTimeout(() => {
+                    const btn = document.getElementById('retryBtn');
+                    btn && (btn.onclick = onRetry);
+                }, 50);
+            }
+        } else {
+            alert(message);
+        }
+    }
+
+    function hideError() {
+        const empty = safeGet('emptyState');
+        if(empty) empty.style.display = 'none';
+    }
+
+    return { showLoading, showError, hideError, safeGet };
+})();
+
+// ====== 模块划分重构 End ======
+
+
 // 全局变量
 let metaData = null;
 let allBooksCache = null; // 用于缓存所有书籍数据，避免重复加载
@@ -20,191 +105,170 @@ const emptyState = document.getElementById('emptyState');
 const pagination = document.getElementById('pagination');
 const statsSection = document.getElementById('statsSection');
 
-// 初始化
-document.addEventListener('DOMContentLoaded', async function() {
-    await loadInitialData();
-    setupEventListeners();
+/* ==== 控制器主入口重构 ==== */
+document.addEventListener('DOMContentLoaded', function() {
+    mainInit();
 });
 
-// 仅加载初始元数据
-async function loadInitialData() {
-    try {
-        showLoading(true, '正在初始化应用...');
-        const response = await fetch('data/meta.json');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        metaData = await response.json();
-        
-        displayStats();
-        displayCategories();
-        displayHotCategories();
-        
-    } catch (error) {
-        console.error('加载初始元数据失败:', error);
-        showError('数据加载失败，请刷新页面重试');
-    } finally {
-        showLoading(false);
+async function mainInit() {
+    ViewModule.showLoading(true, '正在初始化应用...');
+    ViewModule.hideError();
+    const meta = await DataModule.loadMeta();
+    if (!meta) {
+        ViewModule.showLoading(false);
+        ViewModule.showError('数据加载失败，请检查网络或文件并重试。', mainInit);
+        return;
     }
+    metaData = meta;
+    ViewModule.showLoading(false);
+    displayStats();
+    displayCategories();
+    displayHotCategories();
+    setupEventListeners();
 }
 
-// 异步加载所有书籍数据（带缓存）
-async function loadAllBooks() {
-    if (allBooksCache) {
-        return allBooksCache;
-    }
-    // 注意：此函数现在不再负责显示加载状态，调用者需要处理
-    try {
-        const categories = metaData.categories;
-        const fetchPromises = categories.map(category => 
-            fetch(`data/books/${category}.json`).then(res => {
-                if (!res.ok) {
-                    console.warn(`无法加载分类: ${category}`);
-                    return []; // 如果某个文件加载失败，返回空数组
-                }
-                return res.json();
-            }).then(books => books.map(book => ({ ...book, category }))) // 将分类信息添加回书籍对象
-        );
-
-        const results = await Promise.allSettled(fetchPromises);
-        
-        const allBooks = results
-            .filter(result => result.status === 'fulfilled')
-            .flatMap(result => result.value);
-
-        allBooksCache = allBooks;
-        console.log(`所有书籍数据加载并缓存完成，共 ${allBooksCache.length} 本。`);
-        return allBooksCache;
-
-    } catch (error) {
-        console.error('加载全量书籍数据时出错:', error);
-        showError('搜索数据加载时出错，请稍后重试');
-        return null; // 返回 null 表示出错
-    }
-}
 
 // 设置事件监听器
+// 防抖工具
+function debounce(fn, delay = 250) {
+    let timer = null;
+    return function(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+}
+
 function setupEventListeners() {
+    // 防抖搜索（回车或按钮）
+    const debouncedSearch = debounce(handleSearch, 250);
     searchInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
-            e.preventDefault(); // 阻止表单的默认提交行为
-            handleSearch();
+            e.preventDefault();
+            debouncedSearch();
         }
     });
-    searchButton.addEventListener('click', handleSearch);
-    
-    document.addEventListener('click', function(e) {
+    searchButton.addEventListener('click', debouncedSearch);
+
+    // 分类点击防抖
+    const debouncedCategory = debounce(function(e) {
         const categoryItem = e.target.closest('.nav-item, .category-item');
         if (categoryItem) {
             const category = categoryItem.dataset.category;
             searchByCategory(category);
         }
-    });
+    }, 250);
+    document.addEventListener('click', debouncedCategory);
 }
 
-// 处理搜索
+// 处理搜索（模块化与健壮性重构）
 function handleSearch() {
     const query = searchInput.value.trim().toLowerCase();
-    
     if (!query) {
         showBrowseSection();
         return;
     }
-    
     if (!metaData) {
-        showError('页面尚未初始化完成，请稍候。');
+        ViewModule.showError('页面尚未初始化完成，请稍候。', mainInit);
         return;
     }
-
-    // 显示加载状态，并用 setTimeout 确保 UI 能够渲染
-    showLoading(true, '正在搜索中，首次搜索可能需要一点时间...');
-    
+    ViewModule.showLoading(true, '正在搜索中...');
     setTimeout(async () => {
         try {
-            const allBooks = await loadAllBooks();
-            if (allBooks === null) { // 如果加载出错
-                showLoading(false);
+            const allBooks = await DataModule.loadAllBooks(metaData.categories);
+            if (!allBooks || !allBooks.length) {
+                ViewModule.showLoading(false);
+                ViewModule.showError('未能获取到任何书籍数据，请刷新或稍后再试。');
                 return;
             }
-
-            currentResults = allBooks.filter(book => 
-                book.title.toLowerCase().includes(query) || 
-                book.author.toLowerCase().includes(query)
-            );
-            
+            currentResults = allBooks.filter(book => {
+                const t = (book.title || '').toLowerCase();
+                const a = (book.author || '').toLowerCase();
+                return t.includes(query) || a.includes(query);
+            });
             currentPage = 1;
             displaySearchResults(`关键词: ${searchInput.value.trim()}`);
         } catch (error) {
             console.error('搜索时发生错误:', error);
-            showError('搜索时发生未知错误，请重试。');
+            ViewModule.showError('搜索时发生未知错误，请重试。');
         } finally {
-            showLoading(false);
+            ViewModule.showLoading(false);
         }
     }, 10);
 }
 
-// 按分类搜索
+// 按分类搜索（模块化与健壮性重构）
 async function searchByCategory(category) {
-    showLoading(true, `正在加载分类: ${category}...`);
+    ViewModule.showLoading(true, `正在加载分类: ${category}...`);
     try {
-        const response = await fetch(`data/books/${category}.json`);
-        if (!response.ok) throw new Error('分类数据加载失败');
-        
-        const books = await response.json();
-        currentResults = books.map(book => ({ ...book, category }));
-        
+        if (!metaData || !metaData.categories.includes(category)) {
+            ViewModule.showLoading(false);
+            ViewModule.showError(`分类 "${category}" 不存在或数据未初始化。`, mainInit);
+            return;
+        }
+        const allBooks = await DataModule.loadAllBooks(metaData.categories);
+        const books = allBooks.filter(book => book.category === category);
+        currentResults = books;
         currentPage = 1;
         displaySearchResults(`分类: ${category}`);
-
     } catch (error) {
         console.error(`加载分类 ${category} 出错:`, error);
-        showError(`加载分类 "${category}" 失败`);
+        ViewModule.showError(`加载分类 "${category}" 失败`);
     } finally {
-        showLoading(false);
+        ViewModule.showLoading(false);
     }
 }
 
 
 // 显示搜索结果
+// 渲染搜索结果 - 加强健壮性
 function displaySearchResults(query) {
     hideAllSections();
-    resultsSection.style.display = 'block';
-    
-    resultsTitle.textContent = `"${query}" 的搜索结果`;
-    resultsCount.textContent = `共找到 ${currentResults.length} 本书籍`;
-    
+    const resultsSectionEl = ViewModule.safeGet('resultsSection');
+    if (resultsSectionEl) resultsSectionEl.style.display = 'block';
+
+    const resultsTitleEl = ViewModule.safeGet('resultsTitle');
+    if (resultsTitleEl) resultsTitleEl.textContent = `"${query}" 的搜索结果`;
+
+    const resultsCountEl = ViewModule.safeGet('resultsCount');
+    if (resultsCountEl) resultsCountEl.textContent = `共找到 ${currentResults.length} 本书籍`;
+
+    const resultsContainerEl = ViewModule.safeGet('resultsContainer');
+    const paginationEl = ViewModule.safeGet('pagination');
+    const emptyStateEl = ViewModule.safeGet('emptyState');
+
     if (currentResults.length === 0) {
-        resultsContainer.innerHTML = '';
-        emptyState.style.display = 'block';
-        pagination.innerHTML = '';
+        if (resultsContainerEl) resultsContainerEl.innerHTML = '';
+        if (emptyStateEl) emptyStateEl.style.display = 'block';
+        if (paginationEl) paginationEl.innerHTML = '';
         return;
     }
-    
-    emptyState.style.display = 'none';
-    
+    if (emptyStateEl) emptyStateEl.style.display = 'none';
+
     const startIndex = (currentPage - 1) * resultsPerPage;
     const endIndex = startIndex + resultsPerPage;
     const pageResults = currentResults.slice(startIndex, endIndex);
-    
-    resultsContainer.innerHTML = pageResults.map(book => `
-        <div class="book-item">
-            <div class="book-info">
-                <h3 class="book-title">${highlightText(book.title, searchInput.value)}</h3>
-                <p class="book-author">作者: ${highlightText(book.author, searchInput.value)}</p>
-                <span class="book-category">${book.category}</span>
+
+    if (resultsContainerEl) {
+        resultsContainerEl.innerHTML = pageResults.map(book => `
+            <div class="book-item">
+                <div class="book-info">
+                    <h3 class="book-title">${highlightText(book.title, searchInput.value)}</h3>
+                    <p class="book-author">作者: ${highlightText(book.author, searchInput.value)}</p>
+                    <span class="book-category">${book.category || '未知'}</span>
+                </div>
+                <div class="book-actions">
+                    ${book.downloadUrl ? 
+                        `<a href="${book.downloadUrl}" target="_blank" rel="noopener" class="download-btn">
+                            <span class="download-icon">📥</span>
+                            下载
+                        </a>` : 
+                        '<span class="no-download">暂无下载</span>'
+                    }
+                </div>
             </div>
-            <div class="book-actions">
-                ${book.downloadUrl ? 
-                    `<a href="${book.downloadUrl}" target="_blank" rel="noopener" class="download-btn">
-                        <span class="download-icon">📥</span>
-                        下载
-                    </a>` : 
-                    '<span class="no-download">暂无下载</span>'
-                }
-            </div>
-        </div>
-    `).join('');
-    
+        `).join('');
+    }
+
     renderPagination();
 }
 
@@ -225,10 +289,13 @@ function escapeRegExp(string) {
 }
 
 // 渲染分页 (保持不变)
+// 分页健壮化
 function renderPagination() {
+    const paginationEl = ViewModule.safeGet('pagination');
     const totalPages = Math.ceil(currentResults.length / resultsPerPage);
+    if (!paginationEl) return;
     if (totalPages <= 1) {
-        pagination.innerHTML = '';
+        paginationEl.innerHTML = '';
         return;
     }
     let paginationHTML = '';
@@ -246,59 +313,78 @@ function renderPagination() {
     if (endPage < totalPages - 1) paginationHTML += `<span class="page-ellipsis">...</span>`;
     if (endPage < totalPages) paginationHTML += `<button class="page-btn" onclick="goToPage(${totalPages})">${totalPages}</button>`;
     if (currentPage < totalPages) paginationHTML += `<button class="page-btn" onclick="goToPage(${currentPage + 1})">下一页</button>`;
-    
-    pagination.innerHTML = paginationHTML;
+
+    paginationEl.innerHTML = paginationHTML;
 }
 
 // 跳转到指定页 (逻辑简化)
+// 分页跳转（安全处理）
 function goToPage(page) {
     currentPage = page;
     displaySearchResults(searchInput.value || '分类浏览');
-    resultsSection.scrollIntoView({ behavior: 'smooth' });
+    const resultsSectionEl = ViewModule.safeGet('resultsSection');
+    if (resultsSectionEl && resultsSectionEl.scrollIntoView) {
+        resultsSectionEl.scrollIntoView({ behavior: 'smooth' });
+    }
 }
 
 // 显示统计信息
 function displayStats() {
     if (!metaData) return;
-    document.getElementById('totalBooks').textContent = metaData.stats.totalBooks.toLocaleString();
-    document.getElementById('totalCategories').textContent = metaData.stats.totalCategories;
-    const lastUpdated = new Date(metaData.stats.lastUpdated);
-    document.getElementById('lastUpdated').textContent = lastUpdated.toLocaleDateString('zh-CN');
+    const booksEl = ViewModule.safeGet('totalBooks');
+    const catsEl = ViewModule.safeGet('totalCategories');
+    const dateEl = ViewModule.safeGet('lastUpdated');
+    if (booksEl) booksEl.textContent = (metaData.stats.totalBooks || 0).toLocaleString();
+    if (catsEl) catsEl.textContent = metaData.stats.totalCategories || '-';
+    if (dateEl) {
+        const lastUpdated = metaData.stats.lastUpdated ? new Date(metaData.stats.lastUpdated) : '';
+        dateEl.textContent = lastUpdated ? lastUpdated.toLocaleDateString('zh-CN') : '-';
+    }
 }
 
 // 显示分类网格 (移除书籍数量显示，因为需要异步加载)
 function displayCategories() {
     if (!metaData) return;
+    const gridEl = ViewModule.safeGet('categoryGrid');
+    if (!gridEl) return;
     const categoryHTML = metaData.categories.map(category => `
         <div class="category-item" data-category="${category}">
             <span class="category-name">${category}</span>
         </div>
     `).join('');
-    categoryGrid.innerHTML = categoryHTML;
+    gridEl.innerHTML = categoryHTML;
 }
 
 // 显示热门分类导航 (移除书籍数量显示)
 function displayHotCategories() {
     if (!metaData) return;
+    const navItemsEl = ViewModule.safeGet('navItems');
+    if (!navItemsEl) return;
     // 简单取前10个分类作为热门
     const hotCategories = metaData.categories.slice(0, 10);
     const navHTML = hotCategories.map(category => 
         `<span class="nav-item" data-category="${category}">${category}</span>`
     ).join('');
-    navItems.innerHTML = navHTML;
+    navItemsEl.innerHTML = navHTML;
 }
 
 // UI状态函数 (保持不变)
 function showBrowseSection() {
     hideAllSections();
-    browseSection.style.display = 'block';
-    statsSection.style.display = 'block';
+    const browseSectionEl = ViewModule.safeGet('browseSection');
+    const statsSectionEl = ViewModule.safeGet('statsSection');
+    if (browseSectionEl) browseSectionEl.style.display = 'block';
+    if (statsSectionEl) statsSectionEl.style.display = 'block';
 }
 function hideAllSections() {
-    resultsSection.style.display = 'none';
-    browseSection.style.display = 'none';
-    emptyState.style.display = 'none';
-    statsSection.style.display = 'none';
+    const resultsSectionEl = ViewModule.safeGet('resultsSection');
+    const browseSectionEl = ViewModule.safeGet('browseSection');
+    const emptyStateEl = ViewModule.safeGet('emptyState');
+    const statsSectionEl = ViewModule.safeGet('statsSection');
+    if (resultsSectionEl) resultsSectionEl.style.display = 'none';
+    if (browseSectionEl) browseSectionEl.style.display = 'none';
+    if (emptyStateEl) emptyStateEl.style.display = 'none';
+    if (statsSectionEl) statsSectionEl.style.display = 'none';
 }
 function showLoading(show, message = '加载中...') {
     // 为了显示自定义消息, 请确保您的 index.html 中 #loading 元素内有一个 id 为 'loading-message' 的子元素
@@ -314,7 +400,8 @@ function showLoading(show, message = '加载中...') {
     }
 }
 function showError(message) {
-    alert(message);
+    // 兼容旧调用，自动转向新模块
+    ViewModule.showError(message);
 }
 
 // 导出函数供全局使用
