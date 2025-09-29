@@ -6,4 +6,4 @@
 
 | 书名 | 作者 | epub/mobi/azw3 |
 | --- | --- | --- |
-| [iOS编程（第4版） (点击查看图片)](https://www.dushupai.com/attachment/2024/06/02/4fdd0f8997fbbd6e.jpg) | Christian Keur/Aaron Hillegass | [下载](https://url89.ctfile.com/f/31084289-1357011823-73a7cc?p=8866) |
+| iOS编程（第4版） | Christian Keur/Aaron Hillegass | [下载](https://url89.ctfile.com/f/31084289-1357011823-73a7cc?p=8866) |

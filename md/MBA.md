@@ -6,6 +6,6 @@
 
 | 书名 | 作者 | epub/mobi/azw3 |
 | --- | --- | --- |
-| [用得上的商学课 (点击查看图片)](https://www.dushupai.com/attachment/2024/06/09/096e5775a8bc9ce4.jpg) | 路骋 | [下载](https://url89.ctfile.com/f/31084289-1357053604-bca457?p=8866) |
-| [30天精读MBA（套装共3册） (点击查看图片)](https://www.dushupai.com/attachment/2024/06/08/d9c9a87f9e6fecfc.jpg) | 科林・巴罗 | [下载](https://url89.ctfile.com/f/31084289-1357045696-20ac29?p=8866) |
-| [MBA十日读（第四版） (点击查看图片)](https://www.dushupai.com/attachment/2024/06/04/9a6d2c1a26ca40a3.jpg) | 史蒂文・西尔比格 | [下载](https://url89.ctfile.com/f/31084289-1357021045-26cf5b?p=8866) |
+| 用得上的商学课 | 路骋 | [下载](https://url89.ctfile.com/f/31084289-1357053604-bca457?p=8866) |
+| 30天精读MBA（套装共3册） | 科林・巴罗 | [下载](https://url89.ctfile.com/f/31084289-1357045696-20ac29?p=8866) |
+| MBA十日读（第四版） | 史蒂文・西尔比格 | [下载](https://url89.ctfile.com/f/31084289-1357021045-26cf5b?p=8866) |

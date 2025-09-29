@@ -6,5 +6,5 @@
 
 | 书名 | 作者 | epub/mobi/azw3 |
 | --- | --- | --- |
-| [Spring Boot实战 (点击查看图片)](https://www.dushupai.com/attachment/2024/06/04/4a3cb0e33ed6e58e.jpg) | Craig Walls | [下载](https://url89.ctfile.com/f/31084289-1357021069-b1405c?p=8866) |
-| [Spring实战（第4版） (点击查看图片)](https://www.dushupai.com/attachment/2024/06/04/db32b11da48f5b78.jpg) | Craig Walls | [下载](https://url89.ctfile.com/f/31084289-1357020319-e008d6?p=8866) |
+| Spring Boot实战 | Craig Walls | [下载](https://url89.ctfile.com/f/31084289-1357021069-b1405c?p=8866) |
+| Spring实战（第4版） | Craig Walls | [下载](https://url89.ctfile.com/f/31084289-1357020319-e008d6?p=8866) |

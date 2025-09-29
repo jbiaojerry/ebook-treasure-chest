@@ -6,6 +6,6 @@
 
 | 书名 | 作者 | epub/mobi/azw3 |
 | --- | --- | --- |
-| [JavaScript函数式编程 (点击查看图片)](https://www.dushupai.com/attachment/2024/06/08/67a038fe8f32fda8.jpg) | Michael Fogus | [下载](https://url89.ctfile.com/f/31084289-1357048030-9c7b24?p=8866) |
-| [Node即学即用 (点击查看图片)](https://www.dushupai.com/attachment/2024/06/03/0ebc07e20480383f.jpg) | Tom Hughes-Croucher/Mike Wilson | [下载](https://url89.ctfile.com/f/31084289-1357019341-c051bb?p=8866) |
-| [PHP和MySQL Web开发（原书第4版） (点击查看图片)](https://www.dushupai.com/attachment/2024/06/01/67c935d57e171839.jpg) | Luke Welling | [下载](https://url89.ctfile.com/f/31084289-1357005859-aace71?p=8866) |
+| JavaScript函数式编程 | Michael Fogus | [下载](https://url89.ctfile.com/f/31084289-1357048030-9c7b24?p=8866) |
+| Node即学即用 | Tom Hughes-Croucher/Mike Wilson | [下载](https://url89.ctfile.com/f/31084289-1357019341-c051bb?p=8866) |
+| PHP和MySQL Web开发（原书第4版） | Luke Welling | [下载](https://url89.ctfile.com/f/31084289-1357005859-aace71?p=8866) |

@@ -6,8 +6,8 @@
 
 | 书名 | 作者 | epub/mobi/azw3 |
 | --- | --- | --- |
-| [Netty实战 (点击查看图片)](https://www.dushupai.com/attachment/2024/06/08/94300cbc684f7320.jpg) |  诺曼・毛瑞尔 | [下载](https://url89.ctfile.com/f/31084289-1357048471-3b0351?p=8866) |
-| [Spring Boot实战 (点击查看图片)](https://www.dushupai.com/attachment/2024/06/04/4a3cb0e33ed6e58e.jpg) | Craig Walls | [下载](https://url89.ctfile.com/f/31084289-1357021069-b1405c?p=8866) |
-| [Java程序员修炼之道 (点击查看图片)](https://www.dushupai.com/attachment/2024/06/04/f24a86d3e8a9b133.jpg) | Benjamin J. Evans/Martijn Verburg | [下载](https://url89.ctfile.com/f/31084289-1357021057-91cde2?p=8866) |
-| [Java 8实战 (点击查看图片)](https://www.dushupai.com/attachment/2024/06/04/24ccc90b22d3442b.jpg) | Raoul-Gabriel Urma等 | [下载](https://url89.ctfile.com/f/31084289-1357021054-fef42d?p=8866) |
-| [Spring实战（第4版） (点击查看图片)](https://www.dushupai.com/attachment/2024/06/04/db32b11da48f5b78.jpg) | Craig Walls | [下载](https://url89.ctfile.com/f/31084289-1357020319-e008d6?p=8866) |
+| Netty实战 |  诺曼・毛瑞尔 | [下载](https://url89.ctfile.com/f/31084289-1357048471-3b0351?p=8866) |
+| Spring Boot实战 | Craig Walls | [下载](https://url89.ctfile.com/f/31084289-1357021069-b1405c?p=8866) |
+| Java程序员修炼之道 | Benjamin J. Evans/Martijn Verburg | [下载](https://url89.ctfile.com/f/31084289-1357021057-91cde2?p=8866) |
+| Java 8实战 | Raoul-Gabriel Urma等 | [下载](https://url89.ctfile.com/f/31084289-1357021054-fef42d?p=8866) |
+| Spring实战（第4版） | Craig Walls | [下载](https://url89.ctfile.com/f/31084289-1357020319-e008d6?p=8866) |

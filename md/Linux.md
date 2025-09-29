@@ -6,7 +6,7 @@
 
 | 书名 | 作者 | epub/mobi/azw3 |
 | --- | --- | --- |
-| [鸟哥的Linux私房菜：基础学习篇（第三版） (点击查看图片)](https://www.dushupai.com/attachment/2024/06/04/bb57da239e8d3394.jpg) | 鸟哥 | [下载](https://url89.ctfile.com/f/31084289-1357022668-37c4df?p=8866) |
-| [鸟哥的Linux私房菜：服务器架设篇（第三版） (点击查看图片)](https://www.dushupai.com/attachment/2024/06/04/0786f046e21f36a2.jpg) | 鸟哥 | [下载](https://url89.ctfile.com/f/31084289-1357022671-598d7f?p=8866) |
-| [Linux就该这么学 (点击查看图片)](https://www.dushupai.com/attachment/2024/06/04/fa043f7469e18dfb.jpg) | 刘遄 | [下载](https://url89.ctfile.com/f/31084289-1357020865-7cfd40?p=8866) |
-| [Linux环境编程：从应用到内核 (点击查看图片)](https://www.dushupai.com/attachment/2024/06/03/c2b5ae011c0c4be8.jpg) | 高峰 | [下载](https://url89.ctfile.com/f/31084289-1357019278-91aa23?p=8866) |
+| 鸟哥的Linux私房菜：基础学习篇（第三版） | 鸟哥 | [下载](https://url89.ctfile.com/f/31084289-1357022668-37c4df?p=8866) |
+| 鸟哥的Linux私房菜：服务器架设篇（第三版） | 鸟哥 | [下载](https://url89.ctfile.com/f/31084289-1357022671-598d7f?p=8866) |
+| Linux就该这么学 | 刘遄 | [下载](https://url89.ctfile.com/f/31084289-1357020865-7cfd40?p=8866) |
+| Linux环境编程：从应用到内核 | 高峰 | [下载](https://url89.ctfile.com/f/31084289-1357019278-91aa23?p=8866) |

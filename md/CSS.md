@@ -6,7 +6,7 @@
 
 | 书名 | 作者 | epub/mobi/azw3 |
 | --- | --- | --- |
-| [CSS重构：样式表性能调优 (点击查看图片)](https://www.dushupai.com/attachment/2024/06/03/b9b45a7a4b0eb0c6.jpg) | Steve Lindstrom | [下载](https://url89.ctfile.com/f/31084289-1357017682-29904e?p=8866) |
-| [CSS禅意花园（修订版） (点击查看图片)](https://www.dushupai.com/attachment/2024/06/02/1008c25abc7e01e2.jpg) | Dave Shea/Mollv E | [下载](https://url89.ctfile.com/f/31084289-1357014547-fc72e6?p=8866) |
-| [精通CSS（第2版） (点击查看图片)](https://www.dushupai.com/attachment/2024/06/02/b20f84d09c731053.jpg) | Andy Budd/Cameron Moll | [下载](https://url89.ctfile.com/f/31084289-1357008904-4f5343?p=8866) |
-| [CSS设计指南（第3版） (点击查看图片)](https://www.dushupai.com/attachment/2024/06/01/9fc34c9cf3502c4b.jpg) | Charles Wyke-Smith | [下载](https://url89.ctfile.com/f/31084289-1357005769-ddcb31?p=8866) |
+| CSS重构：样式表性能调优 | Steve Lindstrom | [下载](https://url89.ctfile.com/f/31084289-1357017682-29904e?p=8866) |
+| CSS禅意花园（修订版） | Dave Shea/Mollv E | [下载](https://url89.ctfile.com/f/31084289-1357014547-fc72e6?p=8866) |
+| 精通CSS（第2版） | Andy Budd/Cameron Moll | [下载](https://url89.ctfile.com/f/31084289-1357008904-4f5343?p=8866) |
+| CSS设计指南（第3版） | Charles Wyke-Smith | [下载](https://url89.ctfile.com/f/31084289-1357005769-ddcb31?p=8866) |

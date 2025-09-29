@@ -6,4 +6,4 @@
 
 | 书名 | 作者 | epub/mobi/azw3 |
 | --- | --- | --- |
-| [人人都是数据分析师 (点击查看图片)](https://www.dushupai.com/attachment/2024/06/04/e4e8d452558429eb.jpg) | 刘红阁/王淑娟/温融冰  | [下载](https://url89.ctfile.com/f/31084289-1357023040-6ede2b?p=8866) |
+| 人人都是数据分析师 | 刘红阁/王淑娟/温融冰  | [下载](https://url89.ctfile.com/f/31084289-1357023040-6ede2b?p=8866) |
