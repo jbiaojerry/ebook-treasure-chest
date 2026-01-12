@@ -12,7 +12,7 @@ on:
 jobs:
   full-sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 120  # 全量同步可能需要较长时间
+    timeout-minutes: 600  # 全量同步可能需要较长时间（10小时，支持处理6万+书籍）
     
     steps:
       - name: Checkout repository
