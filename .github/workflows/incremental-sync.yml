@@ -1,0 +1,76 @@
+name: Incremental Sync Books
+
+permissions:
+  contents: write
+
+on:
+  schedule:
+    # 每天凌晨2点自动执行（UTC时间，即北京时间10点）
+    - cron: '0 2 * * *'
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  incremental-sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60  # 增量同步通常较快
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 aiohttp
+
+      - name: Incremental sync books
+        env:
+          BOOK_SITE_DOMAIN: ${{ secrets.BOOK_SITE_DOMAIN }}
+          OUTPUT_DIR: md
+        run: |
+          # 检查环境变量
+          if [ -z "$BOOK_SITE_DOMAIN" ]; then
+            echo "❌ 错误: BOOK_SITE_DOMAIN 未设置"
+            echo "请在 GitHub Repository Settings > Secrets and variables > Actions 中添加 BOOK_SITE_DOMAIN"
+            exit 1
+          fi
+          
+          echo "✅ BOOK_SITE_DOMAIN 已从GitHub Secrets加载"
+          echo "📁 输出目录: $OUTPUT_DIR"
+          
+          # 运行增量同步脚本
+          cd scripts/sync
+          python3 incremental_sync.py
+
+      - name: Update README and all_books.json
+        if: success()  # 只有同步成功才更新
+        run: |
+          # 更新README.md的热门分类章节
+          echo "📝 更新README.md热门分类章节..."
+          python3 scripts/sync/update_readme_hot_categories.py || echo "⚠️  README更新失败，继续执行"
+          
+          # 生成all_books.json
+          echo "📝 生成all_books.json..."
+          python3 scripts/parse_md_to_json.py || echo "⚠️  all_books.json生成失败，继续执行"
+
+      - name: Commit and push changes
+        if: success()  # 只有同步成功才提交
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 检查是否有变更
+          if [ -n "$(git status --porcelain)" ]; then
+            # 添加所有变更（md目录、README.md、all_books.json等）
+            git add md/ README.md docs/all-books.json docs/parse-stats.json || true
+            git commit -m "auto: incremental sync books and update README [skip ci]" || echo "No changes to commit"
+            git push
+          else
+            echo "No changes to commit"
+          fi

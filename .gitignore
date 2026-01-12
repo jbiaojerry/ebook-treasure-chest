@@ -1,0 +1,29 @@
+# 配置文件（包含敏感信息）
+scripts/sync/config.py
+
+# 测试输出目录
+md_test/
+
+# 备份文件
+backup/
+md_backup/
+
+# Python缓存
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 环境变量文件
+.env
+.env.local
+
+# IDE配置
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 系统文件
+.DS_Store
+Thumbs.db

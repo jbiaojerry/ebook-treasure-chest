@@ -71,10 +71,30 @@ function searchBooks(keyword) {
   }).slice(0, MAX_RESULTS); // 限制结果数量
 }
 
+// HTML 转义函数
+function escapeHtml(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// 正则表达式特殊字符转义
+function escapeRegex(str) {
+  if (!str) return '';
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function highlightText(text, keyword) {
-  if (!keyword) return text;
-  const regex = new RegExp(`(${keyword})`, 'gi');
-  return text.replace(regex, '<mark>$1</mark>');
+  if (!keyword || !text) return escapeHtml(text);
+  
+  // 转义正则表达式特殊字符，防止正则表达式注入
+  const escapedKeyword = escapeRegex(keyword);
+  const regex = new RegExp(`(${escapedKeyword})`, 'gi');
+  
+  // 先转义 HTML，再添加高亮标记
+  const escapedText = escapeHtml(text);
+  return escapedText.replace(regex, '<mark>$1</mark>');
 }
 
 function renderResults(results, keyword) {
@@ -116,6 +136,22 @@ function renderResults(results, keyword) {
     const highlightedAuthor = highlightText(b.author || "未知", keywordLower);
     const highlightedCategory = highlightText(b.category || "", keywordLower);
     
+    // 验证和转义链接 URL，防止 javascript: 协议等 XSS 攻击
+    let safeLink = "#";
+    if (b.link) {
+      try {
+        const url = new URL(b.link, window.location.origin);
+        // 只允许 http、https 协议
+        if (url.protocol === 'http:' || url.protocol === 'https:') {
+          safeLink = url.href;
+        }
+      } catch (e) {
+        // 如果 URL 解析失败，使用原始链接（可能是相对路径）
+        // 但需要转义 HTML 特殊字符
+        safeLink = escapeHtml(b.link);
+      }
+    }
+    
     div.innerHTML = `
       <div style="margin-bottom: 10px;">
         <strong style="font-size: 16px; color: #93a1a1; font-weight: 600;">${highlightedTitle}</strong>
@@ -126,7 +162,7 @@ function renderResults(results, keyword) {
         <span>📂 ${highlightedCategory}</span>
       </div>
       <div>
-        <a href="${b.link}" target="_blank" rel="noopener" style="
+        <a href="${safeLink}" target="_blank" rel="noopener" style="
           display: inline-block;
           padding: 6px 14px;
           background: #268bd2;

@@ -1,0 +1,65 @@
+name: Full Sync Books
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:  # 只允许手动触发
+  # 也可以添加一次性schedule，例如：
+  # schedule:
+  #   - cron: '0 0 1 1 *'  # 每年1月1日执行一次
+
+jobs:
+  full-sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120  # 全量同步可能需要较长时间
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 aiohttp
+
+      - name: Full sync books
+        env:
+          BOOK_SITE_DOMAIN: ${{ secrets.BOOK_SITE_DOMAIN }}
+          OUTPUT_DIR: md
+        run: |
+          # 检查环境变量
+          if [ -z "$BOOK_SITE_DOMAIN" ]; then
+            echo "❌ 错误: BOOK_SITE_DOMAIN 未设置"
+            echo "请在 GitHub Repository Settings > Secrets and variables > Actions 中添加 BOOK_SITE_DOMAIN"
+            exit 1
+          fi
+          
+          echo "✅ BOOK_SITE_DOMAIN 已从GitHub Secrets加载"
+          echo "📁 输出目录: $OUTPUT_DIR"
+          
+          # 运行全量同步脚本（会自动查找最大ID并更新README和all_books.json）
+          cd scripts/sync
+          python3 sync_all_books.py --skip-backup
+
+      - name: Commit and push changes
+        if: success()  # 只有同步成功才提交
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 检查是否有变更
+          if [ -n "$(git status --porcelain)" ]; then
+            # 添加所有变更（md目录、README.md、all_books.json等）
+            git add md/ README.md docs/all-books.json docs/parse-stats.json || true
+            git commit -m "auto: full sync books and update README [skip ci]" || echo "No changes to commit"
+            git push
+          else
+            echo "No changes to commit"
+          fi

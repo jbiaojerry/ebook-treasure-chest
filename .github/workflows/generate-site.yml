@@ -10,6 +10,8 @@ on:
     paths:
       - "scripts/**"
       - "md/**"
+  # 排除由同步脚本触发的提交（避免循环）
+  # 同步脚本使用 [skip ci] 标记，不会触发此工作流
 
 jobs:
   build:
@@ -27,8 +29,15 @@ jobs:
           echo "No external dependencies required"
 
       - name: Parse MD files to JSON
+        # 注意：all-books.json 通常已由同步脚本生成
+        # 这里确保all-books.json存在（如果不存在则生成）
         run: |
-          python scripts/parse_md_to_json.py
+          if [ ! -f "docs/all-books.json" ]; then
+            echo "⚠️  all-books.json 不存在，生成中..."
+            python scripts/parse_md_to_json.py
+          else
+            echo "✅ all-books.json 已存在（可能由同步脚本生成），跳过生成"
+          fi
 
       - name: Generate index.html
         run: |
