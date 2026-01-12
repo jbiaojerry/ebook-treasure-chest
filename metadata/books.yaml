@@ -22,3 +22,11 @@ books:
     level: Beginner
     formats: [PDF]
     link: https://example.com/linear-algebra
+
+  - title: test
+    author: Sheldon Axler
+    category: Mathematics
+    language: EN
+    level: Beginner
+    formats: [PDF]
+    link: https://example.com/linear-algebra
