@@ -10,6 +10,7 @@ on:
     paths:
       - "metadata/**"
       - "scripts/**"
+      - "md/**"
 
 jobs:
   build:
@@ -26,7 +27,11 @@ jobs:
         run: |
           pip install pyyaml
 
-      - name: Generate index.md
+      - name: Parse MD files to JSON
+        run: |
+          python scripts/parse_md_to_json.py
+
+      - name: Generate index.html
         run: |
           python scripts/generate_index.py
 
@@ -34,7 +39,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/index.html docs/books.json
+          git add docs/index.html docs/books.json docs/all-books.json docs/parse-stats.json docs/search.js
           git rm docs/index.md 2>/dev/null || true
-          git commit -m "auto: update index files" || echo "No changes"
+          git commit -m "auto: update index and search data" || echo "No changes"
           git push

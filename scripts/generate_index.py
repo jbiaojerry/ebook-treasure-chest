@@ -52,10 +52,13 @@ def render_search_ui():
 <div style="margin: 20px 0;">
   <input
     type="text"
-    placeholder="搜索 书名 / 作者 / 分类 / 语言 / 难度"
+    placeholder="搜索 书名 / 作者 / 分类（支持多关键词，用空格分隔）"
     oninput="onSearch(event)"
-    style="width: 100%; padding: 10px; font-size: 16px;"
+    style="width: 100%; padding: 10px; font-size: 16px; border: 2px solid #0366d6; border-radius: 4px;"
   />
+  <p style="margin-top: 10px; color: #586069; font-size: 14px;">
+    💡 提示：支持搜索书名、作者、分类，可输入多个关键词（用空格分隔）
+  </p>
 </div>
 
 <div id="search-results"></div>
@@ -330,13 +333,20 @@ def main():
     html_content = generate_html(md_content)
     OUTPUT_HTML.write_text(html_content, encoding="utf-8")
 
-    # 写 books.json（给前端搜索用）
+    # 写 books.json（给前端搜索用，作为 metadata 数据的备份）
     OUTPUT_JSON.write_text(
         json.dumps(books, ensure_ascii=False, indent=2),
         encoding="utf-8"
     )
 
     print("✅ index.html & books.json generated")
+    
+    # 提示：all-books.json 需要单独运行 parse_md_to_json.py 生成
+    all_books_file = ROOT / "docs" / "all-books.json"
+    if all_books_file.exists():
+        print(f"ℹ️  检测到 all-books.json ({all_books_file.stat().st_size / 1024 / 1024:.2f} MB)")
+    else:
+        print("ℹ️  提示：运行 'python scripts/parse_md_to_json.py' 生成 all-books.json")
 
 
 if __name__ == "__main__":

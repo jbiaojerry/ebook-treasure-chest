@@ -91,10 +91,13 @@
 <div style="margin: 20px 0;">
   <input
     type="text"
-    placeholder="搜索 书名 / 作者 / 分类 / 语言 / 难度"
+    placeholder="搜索 书名 / 作者 / 分类（支持多关键词，用空格分隔）"
     oninput="onSearch(event)"
-    style="width: 100%; padding: 10px; font-size: 16px;"
+    style="width: 100%; padding: 10px; font-size: 16px; border: 2px solid #0366d6; border-radius: 4px;"
   />
+  <p style="margin-top: 10px; color: #586069; font-size: 14px;">
+    💡 提示：支持搜索书名、作者、分类，可输入多个关键词（用空格分隔）
+  </p>
 </div>
 
 <div id="search-results"></div>
