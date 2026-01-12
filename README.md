@@ -8,7 +8,7 @@
 ![GitHub stars](https://img.shields.io/github/stars/jbiaojerry/ebook-treasure-chest?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/jbiaojerry/ebook-treasure-chest?style=social)
 
-> **🌐 [在线访问 GitHub Pages](https://jbiaojerry.github.io/ebook-treasure-chest/)** - 体验强大的实时搜索功能，快速找到你想要的电子书！
+> **🌐 [在线访问 GitHub Pages](https://jbiaojerry.github.io/ebook-treasure-chest/)** - 体验强大的实时搜索功能和多关键字搜索，快速找到你想要的电子书！
 
 欢迎来到电子书下载宝库，一个汇聚了各类电子书下载链接的地方。无论你是喜欢阅读经典文学、经管励志、终身学习、职场创业、技术手册还是其他类型的书籍，这里都能满足你的需求。
 该库涵盖了帆书app(原樊登读书)、微信读书、京东读书、喜马拉雅等读书app的大部分电子书。
@@ -21,26 +21,14 @@
 
 浏览我们的下载宝库非常简单：
 
-### 🌐 在线搜索（推荐）
+### 🌐 实时快速搜索（推荐）
 
-**访问 [GitHub Pages 在线搜索页面](https://jbiaojerry.github.io/ebook-treasure-chest/)**，体验强大的实时搜索功能：
+**访问 [GitHub Pages 实时在线搜索页面](https://jbiaojerry.github.io/ebook-treasure-chest/)**，体验强大的实时快速搜索和多关键词搜索功能：
 
 - **🔎 实时搜索**：输入书名、作者或分类关键词，即时显示匹配结果
-- **📊 数据统计**：查看总书籍数、分类数等统计信息
-- **🏷️ 热门分类**：快速浏览热门分类的示例书籍
 - **💡 多关键词搜索**：支持同时搜索多个关键词（用空格分隔）
 
 ![搜索功能演示](.github/search-demo.gif?v=2)
-
-### 📖 快速搜索（GitHub 页面）
-- **Ctrl+F** 搜索关键词，快速定位你感兴趣的电子书类型
-- **点击下方标签** 直接进入对应分类页面
-- **按数量排序** 标签按书籍数量从多到少排列，方便找到热门分类
-
-### 📚 下载步骤
-1. 访问 [在线搜索页面](https://jbiaojerry.github.io/ebook-treasure-chest/) 或使用下方目录索引
-2. 使用搜索功能或点击标签进入详细的下载链接页面
-3. 在下载页面找到包含epub、mobi、azw3格式的下载链接，点击下载即可
 
 ### 💡 搜索技巧
 - **在线搜索**：访问 GitHub Pages 页面，使用实时搜索功能（推荐）
