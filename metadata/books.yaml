@@ -1,0 +1,7 @@
+- id: hello-book
+  title: 第一本文档
+  path: books/demo/hello.pdf
+  language: zh
+  categories:
+    - demo
+  level: beginner
