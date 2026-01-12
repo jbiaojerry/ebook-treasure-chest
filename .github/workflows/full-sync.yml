@@ -45,8 +45,9 @@ jobs:
           echo "📁 输出目录: $OUTPUT_DIR"
           
           # 运行全量同步脚本（会自动查找最大ID并更新README和all_books.json）
+          # 使用分批处理：每批20000本，降低单次运行风险，配合断点续传和超时保护
           cd scripts/sync
-          python3 sync_all_books.py --skip-backup
+          python3 sync_all_books.py --skip-backup --batch-size 20000
 
       - name: Commit and push changes
         if: success()  # 只有同步成功才提交
