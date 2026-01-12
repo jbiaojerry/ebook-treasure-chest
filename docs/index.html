@@ -21,101 +21,148 @@
     <style>
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "Microsoft YaHei", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
             line-height: 1.6;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
             color: #24292e;
-            background-color: #ffffff;
+            background: linear-gradient(to bottom, #f6f8fa 0%, #ffffff 200px);
+            min-height: 100vh;
         }
         
         @media (max-width: 768px) {
             body {
-                padding: 10px;
+                padding: 15px;
             }
         }
         
-        h1, h2, h3, h4 {
-            margin-top: 24px;
-            margin-bottom: 16px;
-            font-weight: 600;
-            line-height: 1.25;
+        header {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
         }
         
         h1 {
-            font-size: 2em;
-            border-bottom: 2px solid #eaecef;
-            padding-bottom: 0.3em;
-            margin-top: 0;
+            font-size: 2.5em;
+            margin: 0 0 16px 0;
+            background: linear-gradient(135deg, #0366d6 0%, #0056b3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            text-align: center;
         }
         
         h2 {
-            font-size: 1.5em;
-            border-bottom: 1px solid #eaecef;
-            padding-bottom: 0.3em;
+            font-size: 1.75em;
+            margin: 32px 0 20px 0;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #0366d6;
+            color: #24292e;
+            font-weight: 600;
+            position: relative;
         }
         
-        h3 { font-size: 1.25em; }
-        h4 { font-size: 1em; }
+        h2::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #0366d6, #0056b3);
+            border-radius: 2px;
+        }
+        
+        h3 {
+            font-size: 1.3em;
+            margin: 24px 0 12px 0;
+            color: #586069;
+            font-weight: 500;
+        }
+        
+        h4 {
+            font-size: 1.1em;
+            margin: 16px 0 8px 0;
+            color: #6a737d;
+            font-weight: 500;
+        }
         
         a {
             color: #0366d6;
             text-decoration: none;
-            transition: color 0.2s ease;
+            transition: all 0.2s ease;
+            font-weight: 500;
         }
         
         a:hover {
-            text-decoration: underline;
             color: #0056b3;
+            text-decoration: underline;
         }
         
         a:focus {
             outline: 2px solid #0366d6;
             outline-offset: 2px;
-        }
-        
-        blockquote {
-            padding: 12px 16px;
-            color: #6a737d;
-            border-left: 0.25em solid #dfe2e5;
-            margin: 16px 0;
-            background-color: #f6f8fa;
-            border-radius: 4px;
-        }
-        
-        hr {
-            height: 0.25em;
-            padding: 0;
-            margin: 32px 0;
-            background-color: #e1e4e8;
-            border: 0;
             border-radius: 2px;
         }
         
+        blockquote {
+            padding: 16px 20px;
+            color: #586069;
+            border-left: 4px solid #0366d6;
+            margin: 20px 0;
+            background: linear-gradient(to right, #f6f8fa 0%, #ffffff 100%);
+            border-radius: 6px;
+            font-style: italic;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        hr {
+            height: 1px;
+            margin: 40px 0;
+            background: linear-gradient(90deg, transparent, #e1e4e8, transparent);
+            border: 0;
+        }
+        
         .search-container {
-            margin: 24px 0;
+            margin: 30px 0;
             position: relative;
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
         }
         
         input[type="text"] {
             width: 100%;
-            padding: 12px 16px;
+            padding: 14px 18px;
             font-size: 16px;
-            border: 2px solid #0366d6;
-            border-radius: 6px;
+            border: 2px solid #d1d9e0;
+            border-radius: 8px;
             box-sizing: border-box;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-            background-color: #fff;
+            transition: all 0.3s ease;
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        input[type="text"]:hover {
+            border-color: #0366d6;
+            box-shadow: 0 2px 6px rgba(3, 102, 214, 0.15);
         }
         
         input[type="text"]:focus {
             outline: none;
-            border-color: #0056b3;
-            box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.1);
+            border-color: #0366d6;
+            box-shadow: 0 0 0 4px rgba(3, 102, 214, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
         }
         
         input[type="text"]::placeholder {
@@ -123,12 +170,15 @@
         }
         
         .search-hint {
-            margin-top: 10px;
+            margin-top: 12px;
             color: #586069;
             font-size: 14px;
             display: flex;
             align-items: center;
             gap: 8px;
+            padding: 8px 12px;
+            background: #f6f8fa;
+            border-radius: 6px;
         }
         
         #search-results {
@@ -141,70 +191,225 @@
             padding: 40px 20px;
             color: #586069;
             font-size: 16px;
+            background: #f6f8fa;
+            border-radius: 8px;
         }
         
         .loading-indicator::before {
             content: "⏳ ";
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
         
         ul {
-            padding-left: 2em;
+            padding-left: 0;
             margin: 16px 0;
+            list-style: none;
         }
         
         li {
-            margin: 0.5em 0;
+            margin: 12px 0;
+            padding: 12px 16px;
+            background: #ffffff;
+            border-left: 3px solid #0366d6;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        li:hover {
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(3, 102, 214, 0.15);
+            border-left-width: 4px;
+        }
+        
+        li strong {
+            color: #24292e;
+            font-size: 1.05em;
         }
         
         p {
             margin: 16px 0;
+            line-height: 1.7;
         }
         
         .overview-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin: 20px 0;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
         }
         
         .stat-item {
-            padding: 16px;
-            background: #f6f8fa;
-            border-radius: 6px;
+            padding: 24px;
+            background: linear-gradient(135deg, #ffffff 0%, #f6f8fa 100%);
+            border-radius: 10px;
             border: 1px solid #e1e4e8;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(3, 102, 214, 0.15);
+            border-color: #0366d6;
+        }
+        
+        .stat-item span {
+            display: block;
+            font-size: 14px;
+            color: #586069;
+            margin-bottom: 8px;
+            font-weight: 500;
         }
         
         .stat-item strong {
             display: block;
-            font-size: 1.2em;
-            color: #0366d6;
+            font-size: 1.8em;
+            background: linear-gradient(135deg, #0366d6 0%, #0056b3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
             margin-top: 4px;
         }
         
         @media (max-width: 600px) {
             .overview-stats {
                 grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
             }
         }
         
-        .footer-note {
-            margin-top: 40px;
+        .category-section {
+            background: #ffffff;
+            padding: 24px;
+            margin: 24px 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e1e4e8;
+            transition: all 0.3s ease;
+        }
+        
+        .category-section:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border-color: #0366d6;
+        }
+        
+        .book-item {
             padding: 16px;
+            margin: 12px 0;
             background: #f6f8fa;
+            border-radius: 8px;
+            border-left: 4px solid #0366d6;
+            transition: all 0.2s ease;
+        }
+        
+        .book-item:hover {
+            background: #e8f4fd;
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(3, 102, 214, 0.1);
+        }
+        
+        .book-item strong {
+            color: #24292e;
+            font-size: 1.05em;
+            display: block;
+            margin-bottom: 6px;
+        }
+        
+        .book-item .book-meta {
+            color: #586069;
+            font-size: 0.9em;
+            margin: 8px 0;
+        }
+        
+        .book-item .book-link {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 6px 14px;
+            background: #0366d6;
+            color: #ffffff !important;
             border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            text-decoration: none !important;
+        }
+        
+        .book-item .book-link:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(3, 102, 214, 0.3);
+        }
+        
+        .note-text {
+            padding: 12px 16px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 6px;
+            color: #856404;
+            font-size: 14px;
+            margin: 20px 0;
+        }
+        
+        .footer-note {
+            margin-top: 60px;
+            padding: 24px;
+            background: linear-gradient(135deg, #f6f8fa 0%, #ffffff 100%);
+            border-radius: 12px;
             text-align: center;
             color: #586069;
             font-size: 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-top: 3px solid #0366d6;
+        }
+        
+        .footer-note a {
+            margin: 0 8px;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        
+        .footer-note a:hover {
+            background: #e8f4fd;
+            text-decoration: none;
+        }
+        
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #0366d6;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0056b3;
         }
     </style>
 </head>
 <body>
 <header>
 <h1>📚 Ebook Treasure Chest</h1>
-
-<blockquote>自动生成，请勿手动修改</blockquote>
-
-<hr>
 
 <h2>📊 统计概览</h2>
 
@@ -256,1218 +461,1498 @@
 
 <hr>
 
-<p>*注：共 1000 个分类，以下显示前 20 个热门分类的书籍。使用搜索功能可查找所有书籍。*</p>
+<p class="note-text">💡 注：共 1000 个分类，以下显示前 20 个热门分类的书籍。使用搜索功能可查找所有书籍。</p>
 
 
-<h2>📂 文学</h2>
+<div class="category-section">
 
-<h3>🌍 Language: ZH</h3>
+## 📂 文学
 
-<h4>⭐ Level: Unknown</h4>
+### 🌍 Language: ZH
 
-<p>*（共 2711 本，显示前 10 本）*</p>
+#### ⭐ Level: Unknown
 
-<ul>
-<li><strong>磨坊信札（作家榜经典文库）</strong> — 阿尔封斯・都德</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491025-903fa5?p=8866">下载链接</a></p>
+<p class="note-text">*（共 2711 本，显示前 10 本）*</p>
 
-<ul>
-<li><strong>百年百部红色经典系列：第一辑（套装共20册）</strong> — 周梅森等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491169-00db51?p=8866">下载链接</a></p>
+<div class="book-item">
+<strong>磨坊信札（作家榜经典文库）</strong>
+<div class="book-meta">👤 阿尔封斯・都德 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491025-903fa5?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
 
-<ul>
-<li><strong>哈代作品集</strong> — 托马斯・哈代</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491061-7ee4c9?p=8866">下载链接</a></p>
+<div class="book-item">
+<strong>百年百部红色经典系列：第一辑（套装共20册）</strong>
+<div class="book-meta">👤 周梅森等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491169-00db51?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
 
-<ul>
-<li><strong>单读29：当代剧作选</strong> — 吴琦</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491283-25cf73?p=8866">下载链接</a></p>
+<div class="book-item">
+<strong>哈代作品集</strong>
+<div class="book-meta">👤 托马斯・哈代 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491061-7ee4c9?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>单读29：当代剧作选</strong>
+<div class="book-meta">👤 吴琦 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491283-25cf73?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>名利场（作家榜经典文库）</strong>
+<div class="book-meta">👤 萨克雷 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491325-e911e2?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>长岛小记</strong>
+<div class="book-meta">👤 郭红 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491448-bef079?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>不定的荣耀</strong>
+<div class="book-meta">👤 胡安・萨雷斯 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491469-ed6e5a?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
 
-<ul>
-<li><strong>名利场（作家榜经典文库）</strong> — 萨克雷</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491325-e911e2?p=8866">下载链接</a></p>
+<div class="book-item">
+<strong>别的声音，别的房间</strong>
+<div class="book-meta">👤 杜鲁门・卡波特 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491487-56594b?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
 
-<ul>
-<li><strong>长岛小记</strong> — 郭红</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491448-bef079?p=8866">下载链接</a></p>
+<div class="book-item">
+<strong>单读28：明亮的时刻-女导演特辑</strong>
+<div class="book-meta">👤 吴琦 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491529-ab13d9?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
 
-<ul>
-<li><strong>不定的荣耀</strong> — 胡安・萨雷斯</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491469-ed6e5a?p=8866">下载链接</a></p>
+<div class="book-item">
+<strong>水经注套装全五册（全本全注全译）</strong>
+<div class="book-meta">👤 郦道元 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491544-98a70b?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
 
-<ul>
-<li><strong>别的声音，别的房间</strong> — 杜鲁门・卡波特</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491487-56594b?p=8866">下载链接</a></p>
 
-<ul>
-<li><strong>单读28：明亮的时刻-女导演特辑</strong> — 吴琦</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491529-ab13d9?p=8866">下载链接</a></p>
+</div>
 
-<ul>
-<li><strong>水经注套装全五册（全本全注全译）</strong> — 郦道元</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491544-98a70b?p=8866">下载链接</a></p>
 
+<div class="category-section">
 
+## 📂 沟通
 
-<h2>📂 沟通</h2>
+### 🌍 Language: ZH
 
-<h3>🌍 Language: ZH</h3>
+#### ⭐ Level: Unknown
 
-<h4>⭐ Level: Unknown</h4>
+<p class="note-text">*（共 84 本，显示前 10 本）*</p>
 
-<p>*（共 84 本，显示前 10 本）*</p>
+<div class="book-item">
+<strong>这真的是你的错吗</strong>
+<div class="book-meta">👤 加藤谛三 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499227-3864f2?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
 
-<ul>
-<li><strong>这真的是你的错吗</strong> — 加藤谛三</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499227-3864f2?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>我就是你啊</strong> — 皮埃尔・佩利西耶</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375506742-b92474?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>特别会说话的人都这样说话</strong> — 大野萌子</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375508956-e88e33?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>可复制的沟通力</strong> — 樊登</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375509097-19917b?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>把自己当回事儿</strong> — 杨天真</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375510702-fc0e3b?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>尬聊终结者</strong> — 庄舒涵</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375511200-f5e66f?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>不妥协的谈判</strong> — 丹尼尔・夏皮罗</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375511224-78bbe2?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>个性优势</strong> — 吉姆・巴雷特/休・格林</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375511347-2ee920?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>畅所欲言</strong> — 道格・克兰德尔/马特・金卡德</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375511779-c8282c?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>无压力社交</strong> — 吉莉恩・巴特勒</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375512292-5b84b2?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 励志</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 373 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>拆掉思维里的墙（白金升级版）</strong> — 古典</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493257-0dad21?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>妈妈的战争</strong> — Momself</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493854-27b055?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>破圈：如何突破认知局限并实现终身成长</strong> — 顾及</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497148-fa747f?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>像高手一样发言</strong> — 久久</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497652-f3a0aa?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>神兽引领的使命</strong> — 小松美羽</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498813-e7da4f?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>底层逻辑：看清这个世界的底牌</strong> — 刘润</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499026-8d4b4e?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>成为可怕的自律人</strong> — 马歇尔・古德史密斯</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499233-71cb99?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>像高手一样行动</strong> — 丹尼尔・科伊尔</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375500049-7f0f39?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>人生不必太用力</strong> — 埃克哈特・托利</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375500094-713b9c?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>不和世界讲道理</strong> — 曹晟康</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375500178-c94c1a?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 经典</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 494 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>磨坊信札（作家榜经典文库）</strong> — 阿尔封斯・都德</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491025-903fa5?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>百年百部红色经典系列：第一辑（套装共20册）</strong> — 周梅森等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491169-00db51?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>经史百家杂钞套装共8册（全本全注全译）</strong> — 余兴安</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491943-3f0e5a?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>太多值得思考的事物</strong> — 索尔・贝娄</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493218-ba0ce5?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>里程碑文库（第三辑）</strong> — 唐克扬等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375496881-d79a75?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>译文经典·第一辑（套装共20册）</strong> — 福楼拜等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497409-47086f?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>人生必读之书：文景古典·名译插图本</strong> — 埃斯库罗斯等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497523-e093d0?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>西方心理学大师经典译丛（套装共11册）</strong> — 阿尔弗雷德・阿德勒</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497529-0e8c3b?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>三联苏俄文学经典译著（套装15册）</strong> — 高尔基等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497571-7a9471?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>世界名著名家经典译本·译文40（套装共40册）</strong> — 奥威尔等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497904-e167f7?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 历史</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 1748 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>美国四百年</strong> — 布・斯里尼瓦桑</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375490923-e9b635?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>六朝文明（中译修订版）</strong> — 丁爱博</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491355-eb0d4e?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>黄金：权力与财富的世界简史</strong> — 伯德・史蒂芬・格雷</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491481-144bc0?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>纳粹集中营史（全2册）</strong> — 尼古劳斯・瓦克斯曼</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491625-c415d8?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>改变历史的香料商人</strong> — 贾尔斯・米尔顿</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491709-49d668?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>哲人与权臣</strong> — 詹姆斯・罗姆</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491652-6fd685?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>希腊思想与文化</strong> — 吴晓群</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491883-e507e4?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>拜占庭的失落之城</strong> — 斯蒂文・朗西曼</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491781-3f42cf?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>大酋长伊丽莎白</strong> — 贾尔斯・米尔顿</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491760-3ce9b1?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>疑案里的中国史</strong> — 艾公子</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375492021-d4507b?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 科普</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 743 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>寻蜂记</strong> — 戴夫・古尔森</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491859-9bd801?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>关灯就睡觉</strong> — 格雷格·D·贾克布</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491976-465249?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>人人都该懂的地外生命</strong> — 刘易斯・达特奈尔</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375492573-a93ad2?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>人人都该懂的能源新趋势</strong> — 瓦茨拉夫・斯米尔</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493416-7ae8a8?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>数据如何误导了我们</strong> — 桑内・布劳</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493749-25b5e6?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>危崖：生存性风险与人类的未来</strong> — 托比・奥德</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493782-80c088?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>牛津科普读本（第一辑）</strong> — 克劳塞维茨等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375496395-3eb1b0?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>国家地理终极观星指南</strong> — 霍华德・施耐德</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375496701-44ca96?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>牛津通识课：理学套装（全4册）</strong> — 麦克・戈德史密斯等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375496950-51ea21?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>0次与10000次</strong> — 吉塔・雅各布</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497181-c8dc00?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 管理</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 613 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>灰犀牛：个人、组织如何与风险共舞</strong> — 米歇尔・渥克</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498000-f693d7?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>长期主义</strong> — 高德威</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498969-41de87?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>福格行为模型</strong> — B.J.福格</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499539-38be34?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>像高手一样行动</strong> — 丹尼尔・科伊尔</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375500049-7f0f39?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>高效的组织都是圆的</strong> — 戴维・珀金斯</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375500100-7e145d?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>马尔科姆·格拉德威尔系列（套装共6册）</strong> — 马尔科姆・格拉德威尔</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375500292-299023?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>时间管理</strong> — 吉姆・兰德尔</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375500340-640c65?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>像高手一样解决问题</strong> — 伯纳德・加雷特等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375500307-6d78d2?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>影响力：全新升级版</strong> — 罗伯特・西奥迪尼</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375500478-9f34c6?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>鹿智者的法则</strong> — 丹・米尔曼</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375501204-e161de?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 社会</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 558 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>现代政治的正当性基础</strong> — 周濂</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491484-c06fa6?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>地狱里的希望</strong> — 丹・波托洛蒂</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375492060-2c8fad?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>贾雷德·戴蒙德作品集（套装共4册）</strong> — 贾雷德・戴蒙德</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375492300-e6d81a?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>吉姆·罗杰斯的大预测</strong> — 吉姆・罗杰斯</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375492939-a2a582?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>温铁军套装（共5册）</strong> — 温铁军</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493437-a29263?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>网上遗产</strong> — 伊莱恩・卡斯凯特</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493404-9f5bf0?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>俄国史译（全7册）</strong> — 伊利娜・谢尔盖耶夫娜・雷巴乔诺克等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493761-ea4345?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>运气的诱饵</strong> — 娜塔莎・道・舒尔</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493695-e4930e?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>在中国大地上</strong> — 保罗・索鲁</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493722-348f90?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>单身偏见</strong> — 克莱尔・佩恩</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493863-2752fc?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 推理</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 531 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>海神的后裔</strong> — 宫部美雪</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375492165-c1f419?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>女郎她死了</strong> — 约翰・迪克森・卡尔</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497154-47f407?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>无颜的肖像</strong> — 连城三纪彦</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498012-7fc0cd?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>土楼杀人事件</strong> — 青稞</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498258-e31108?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>白兔</strong> — 伊坂幸太郎</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498687-16a448?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>陈舜臣作品精选集（套装共20册）</strong> — 陈舜臣</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498732-db7b9b?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>天涯双探4：双城血案</strong> — 七名</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498834-6b8e51?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>非常疑犯</strong> — 红眸</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499008-3c6677?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>静默的铁证</strong> — 米烛光</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499452-818cac?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>时空旅行者的沙漏</strong> — 方丈贵惠</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499554-129728?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 经济</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 487 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>金钱革命</strong> — 安妮・博登</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375490917-6f069c?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>智造中国</strong> — 马兆远</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491232-200000?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>原则：应对变化中的世界秩序</strong> — 瑞・达利欧</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375492075-4f7b4c?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>进化的力量</strong> — 刘润</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375492024-2f20d3?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>吉姆·罗杰斯的大预测</strong> — 吉姆・罗杰斯</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375492939-a2a582?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>房价的逻辑</strong> — 徐远</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493002-d88db9?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>温铁军套装（共5册）</strong> — 温铁军</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493437-a29263?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>变量4</strong> — 何帆</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493833-c77a73?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>芯片陷阱</strong> — 马克・拉叙斯</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375495186-db8ef2?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>超级资管</strong> — 乔永远/孔祥</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497304-dc9d0d?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 哲学</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 431 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>前行笔记之耕耘心田</strong> — 希阿荣博堪布</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491703-fada1f?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>感知•理知•自我认知</strong> — 陈嘉映</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491952-add17f?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>毓老师说系列（共十八册）</strong> — 爱新觉罗・毓鋆讲述</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375492564-bdeea5?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>佛系：中国人的生活智慧</strong> — 果麦文化</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493296-11aa38?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>攀登尼采</strong> — 约翰・卡格</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493479-e7baa8?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>西方古典学术史（第一卷）</strong> — 约翰・埃德温・桑兹</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497643-d4630d?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>刘擎西方现代思想讲义</strong> — 刘擎</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498162-6d669a?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>哲学100问（套装共3册）</strong> — 书杰</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498444-830a41?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>西方现代思想家精品译丛（18卷）</strong> — 哈耶克等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498924-4e23e7?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>假如猫狗会说话</strong> — 拉斯・弗雷德里克·H.史文德森</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499347-09c400?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 传记</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 413 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>达·芬奇传：自由的心灵</strong> — 查尔斯・尼科尔</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491400-800bfb?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>斯大林传</strong> — 德米特里・安东诺维奇・沃尔科戈诺夫</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491829-e707fa?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>陀思妥耶夫斯基传</strong> — 安德里亚斯・古斯基</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498042-d0a3d3?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>帝国浮沉：关于拿破仑一世的私人回忆（全2册）</strong> — 克劳德・梅尼瓦尔</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498120-b235b7?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>伊藤博文：近代日本奠基人</strong> — 伊藤之雄</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498831-0dc067?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>德意志理想主义的诞生：席勒传</strong> — 吕迪格尔・萨弗兰斯基</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499365-050061?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>牛顿传</strong> — 詹姆斯・格雷克</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499524-4bd6cf?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>绯闻艺术史</strong> — 林微云</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499971-4d8b4d?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>卡尔·拉格斐传</strong> — 洛朗・阿朗-卡龙</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375500028-a96942?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>译文传记作品系列（套装共15册）</strong> — 斯特凡・茨威格</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375500337-e1be2a?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 美国</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 399 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>美国四百年</strong> — 布・斯里尼瓦桑</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375490923-e9b635?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>坠落与重生：911的故事</strong> — 米切尔・祖科夫</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497535-e9ce53?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>大萧条前夜的繁荣与疯狂</strong> — 比尔・布莱森</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498222-e55345?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>美利坚的民族</strong> — 科林・伍达德</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499449-5b4652?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>辉煌信标：美国灯塔史</strong> — 埃里克・杰・多林</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499494-7adcd3?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>达摩流浪者</strong> — 杰克・凯鲁亚克</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375501198-87ebe7?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>平原上的城市</strong> — 科马克・麦卡锡</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375501537-1986a4?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>帝国统治的逻辑</strong> — 赫尔弗里德・明克勒</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375503304-037ef1?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>被误解的盐</strong> — 詹姆斯・迪尼科兰托尼奥</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375504426-dfa18b?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>美国的反智传统</strong> — 理查德・霍夫施塔特</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375506823-0cc3c2?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 心理</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 396 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>我们为何无聊</strong> — 詹姆斯・丹克特等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375490977-1e5ce8?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>认知工具</strong> — 塞西莉亚・海耶斯</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491715-7dc597?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>动机与人格</strong> — 亚伯拉罕・马斯洛</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375495429-a9bbbc?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>0次与10000次</strong> — 吉塔・雅各布</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497181-c8dc00?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>疲劳自救手册</strong> — 玛丽・伯吉斯/特鲁迪・查尔德</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497475-e986a2?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>沙发上的心理学</strong> — 菲利帕・佩里</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497946-e0bf91?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>新乌合之众</strong> — 迈赫迪・穆萨伊德</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497907-396975?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>十种人性</strong> — 德克斯特・迪亚斯</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498141-62f242?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>译文心理分析作品集（套装共12册）</strong> — 西格蒙德・弗洛伊德等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498315-9e8afd?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>贪婪的多巴胺</strong> — 丹尼尔・利伯曼等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498459-018013?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 悬疑</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 393 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>耳语之人</strong> — 约翰・迪克森・卡尔</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493566-c34524?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>反骗案中案·完结版（全5册）</strong> — 常书欣</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375495066-b34054?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>回到种子里去</strong> — 加西亚・马尔克斯</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375495486-3c8ab0?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>人间我来过</strong> — 那多</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375495513-a7fbae?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>那多经典作品合集（12册合集）</strong> — 那多</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498663-8c7a04?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>天涯双探4：双城血案</strong> — 七名</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498834-6b8e51?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>黄雀计划</strong> — 鬼庖丁</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498957-155512?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>静默的铁证</strong> — 米烛光</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499452-818cac?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>恶寒</strong> — 伊冈瞬</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499659-21ca24?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>全员嫌疑人</strong> — 大山诚一郎</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499701-1e03fc?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 商业</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 387 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>海尔制</strong> — 胡国栋</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491937-798132?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>进化的力量</strong> — 刘润</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375492024-2f20d3?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>未来呼啸而来</strong> — 彼得・戴曼迪斯</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375496473-11e887?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>生生不息</strong> — 范海涛</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497664-326a21?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>常识的力量</strong> — 梁宇峰</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498927-eace22?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>长期主义</strong> — 高德威</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498969-41de87?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>底层逻辑：看清这个世界的底牌</strong> — 刘润</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499026-8d4b4e?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>像高手一样解决问题</strong> — 伯纳德・加雷特等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375500307-6d78d2?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>影响力：全新升级版</strong> — 罗伯特・西奥迪尼</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375500478-9f34c6?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>贝佐斯传</strong> — 哈罗德・布鲁姆</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375500592-39d6e8?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 金融</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 370 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>金钱革命</strong> — 安妮・博登</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375490917-6f069c?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>财富是认知的变现</strong> — 舒泰峰</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375490950-03b116?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>耐心的资本</strong> — 维多利亚・伊凡希娜/乔希・勒纳</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375495492-4e8778?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>超级资管</strong> — 乔永远/孔祥</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497304-dc9d0d?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>行为金融学</strong> — 詹姆斯・蒙蒂尔</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497613-50ebe9?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>新金融帝国</strong> — 田中道昭</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497616-4a5b13?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>中国资本市场变革</strong> — 肖钢</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497634-635389?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>行为投资者</strong> — 丹尼尔・克罗斯比</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498837-ac3b7a?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>投资核心资产</strong> — 王德伦等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499194-e70303?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>美国货币史（精校本）</strong> — 米尔顿・弗里德曼</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375499098-0300b3?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 随笔</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 368 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>长岛小记</strong> — 郭红</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491448-bef079?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>那间街角的茶铺</strong> — 王笛</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491775-2dbac0?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>读书是最对得起付出的一件事</strong> — 梁晓声</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491988-526c88?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>我爱这哭不出来的浪漫</strong> — 严明</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375492279-da9a63?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>借山而居（珍藏版）</strong> — 张二冬</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375492669-bdbbd4?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>躺平</strong> — 贝恩德・布伦纳</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493068-3a03e2?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>声誉</strong> — 唐诺</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493275-278681?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>圈外编辑</strong> — 都筑响一</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493812-a4c0be?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>新冠时代的我们</strong> — 保罗・乔尔达诺</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375495420-65c573?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>再见，平成时代</strong> — 新井一二三</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375496449-4bf150?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 投资</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 365 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>财富是认知的变现</strong> — 舒泰峰</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375490950-03b116?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>中高净值人群财富管理的顶层设计（全5册）</strong> — 李升等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491427-50aa01?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>价值投资的十项核心原则</strong> — 詹姆斯・蒙蒂尔</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491475-157297?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>攻守：可转债投资实用手册</strong> — 饕餮海等</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375492006-a0e7e3?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>巴菲特之道（原书第3版）（典藏版）</strong> — 罗伯特・哈格斯特朗</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375492738-ab0390?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>房价的逻辑</strong> — 徐远</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493002-d88db9?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>超级资管</strong> — 乔永远/孔祥</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497304-dc9d0d?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>行为金融学</strong> — 詹姆斯・蒙蒂尔</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375497613-50ebe9?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>股票魔法师3</strong> — Mark Minervini</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498612-5bb5b5?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>趋势投资</strong> — 丁圣元</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375498825-647703?p=8866">下载链接</a></p>
-
-
-
-<h2>📂 思维</h2>
-
-<h3>🌍 Language: ZH</h3>
-
-<h4>⭐ Level: Unknown</h4>
-
-<p>*（共 353 本，显示前 10 本）*</p>
-
-<ul>
-<li><strong>认知工具</strong> — 塞西莉亚・海耶斯</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375491715-7dc597?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>拆掉思维里的墙（白金升级版）</strong> — 古典</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375493257-0dad21?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>人生不必太用力</strong> — 埃克哈特・托利</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375500094-713b9c?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>鹿智者的法则</strong> — 丹・米尔曼</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375501204-e161de?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>批判性思维与说服性写作</strong> — 路易丝・卡茨</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375501387-c9409e?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>大脑的一天·鹈鹕丛书</strong> — 苏珊・格林菲尔德</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375501504-478cce?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>九宫格写作法</strong> — 山口拓朗</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375508920-0056c2?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>我是谁：心理学实证研究社会思维</strong> — 戴维・迈尔斯/琼・特韦奇</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375509499-e67aab?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>深度影响</strong> — 崔璀</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375509760-4833a9?p=8866">下载链接</a></p>
-
-<ul>
-<li><strong>五维思考法</strong> — 爱德华・伯格/迈克尔・斯塔伯德</li>
-</ul>
-<p>  格式：epub, mobi, azw3 ｜ <a href="https://url89.ctfile.com/f/31084289-1375510294-3b55d2?p=8866">下载链接</a></p>
-
+<div class="book-item">
+<strong>我就是你啊</strong>
+<div class="book-meta">👤 皮埃尔・佩利西耶 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375506742-b92474?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>特别会说话的人都这样说话</strong>
+<div class="book-meta">👤 大野萌子 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375508956-e88e33?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>可复制的沟通力</strong>
+<div class="book-meta">👤 樊登 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375509097-19917b?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>把自己当回事儿</strong>
+<div class="book-meta">👤 杨天真 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375510702-fc0e3b?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>尬聊终结者</strong>
+<div class="book-meta">👤 庄舒涵 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375511200-f5e66f?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>不妥协的谈判</strong>
+<div class="book-meta">👤 丹尼尔・夏皮罗 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375511224-78bbe2?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>个性优势</strong>
+<div class="book-meta">👤 吉姆・巴雷特/休・格林 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375511347-2ee920?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>畅所欲言</strong>
+<div class="book-meta">👤 道格・克兰德尔/马特・金卡德 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375511779-c8282c?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>无压力社交</strong>
+<div class="book-meta">👤 吉莉恩・巴特勒 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375512292-5b84b2?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 励志
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 373 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>拆掉思维里的墙（白金升级版）</strong>
+<div class="book-meta">👤 古典 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493257-0dad21?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>妈妈的战争</strong>
+<div class="book-meta">👤 Momself ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493854-27b055?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>破圈：如何突破认知局限并实现终身成长</strong>
+<div class="book-meta">👤 顾及 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497148-fa747f?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>像高手一样发言</strong>
+<div class="book-meta">👤 久久 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497652-f3a0aa?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>神兽引领的使命</strong>
+<div class="book-meta">👤 小松美羽 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498813-e7da4f?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>底层逻辑：看清这个世界的底牌</strong>
+<div class="book-meta">👤 刘润 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499026-8d4b4e?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>成为可怕的自律人</strong>
+<div class="book-meta">👤 马歇尔・古德史密斯 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499233-71cb99?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>像高手一样行动</strong>
+<div class="book-meta">👤 丹尼尔・科伊尔 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375500049-7f0f39?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>人生不必太用力</strong>
+<div class="book-meta">👤 埃克哈特・托利 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375500094-713b9c?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>不和世界讲道理</strong>
+<div class="book-meta">👤 曹晟康 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375500178-c94c1a?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 经典
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 494 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>磨坊信札（作家榜经典文库）</strong>
+<div class="book-meta">👤 阿尔封斯・都德 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491025-903fa5?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>百年百部红色经典系列：第一辑（套装共20册）</strong>
+<div class="book-meta">👤 周梅森等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491169-00db51?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>经史百家杂钞套装共8册（全本全注全译）</strong>
+<div class="book-meta">👤 余兴安 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491943-3f0e5a?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>太多值得思考的事物</strong>
+<div class="book-meta">👤 索尔・贝娄 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493218-ba0ce5?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>里程碑文库（第三辑）</strong>
+<div class="book-meta">👤 唐克扬等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375496881-d79a75?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>译文经典·第一辑（套装共20册）</strong>
+<div class="book-meta">👤 福楼拜等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497409-47086f?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>人生必读之书：文景古典·名译插图本</strong>
+<div class="book-meta">👤 埃斯库罗斯等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497523-e093d0?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>西方心理学大师经典译丛（套装共11册）</strong>
+<div class="book-meta">👤 阿尔弗雷德・阿德勒 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497529-0e8c3b?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>三联苏俄文学经典译著（套装15册）</strong>
+<div class="book-meta">👤 高尔基等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497571-7a9471?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>世界名著名家经典译本·译文40（套装共40册）</strong>
+<div class="book-meta">👤 奥威尔等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497904-e167f7?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 历史
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 1748 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>美国四百年</strong>
+<div class="book-meta">👤 布・斯里尼瓦桑 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375490923-e9b635?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>六朝文明（中译修订版）</strong>
+<div class="book-meta">👤 丁爱博 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491355-eb0d4e?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>黄金：权力与财富的世界简史</strong>
+<div class="book-meta">👤 伯德・史蒂芬・格雷 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491481-144bc0?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>纳粹集中营史（全2册）</strong>
+<div class="book-meta">👤 尼古劳斯・瓦克斯曼 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491625-c415d8?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>改变历史的香料商人</strong>
+<div class="book-meta">👤 贾尔斯・米尔顿 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491709-49d668?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>哲人与权臣</strong>
+<div class="book-meta">👤 詹姆斯・罗姆 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491652-6fd685?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>希腊思想与文化</strong>
+<div class="book-meta">👤 吴晓群 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491883-e507e4?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>拜占庭的失落之城</strong>
+<div class="book-meta">👤 斯蒂文・朗西曼 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491781-3f42cf?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>大酋长伊丽莎白</strong>
+<div class="book-meta">👤 贾尔斯・米尔顿 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491760-3ce9b1?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>疑案里的中国史</strong>
+<div class="book-meta">👤 艾公子 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375492021-d4507b?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 科普
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 743 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>寻蜂记</strong>
+<div class="book-meta">👤 戴夫・古尔森 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491859-9bd801?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>关灯就睡觉</strong>
+<div class="book-meta">👤 格雷格·D·贾克布 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491976-465249?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>人人都该懂的地外生命</strong>
+<div class="book-meta">👤 刘易斯・达特奈尔 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375492573-a93ad2?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>人人都该懂的能源新趋势</strong>
+<div class="book-meta">👤 瓦茨拉夫・斯米尔 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493416-7ae8a8?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>数据如何误导了我们</strong>
+<div class="book-meta">👤 桑内・布劳 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493749-25b5e6?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>危崖：生存性风险与人类的未来</strong>
+<div class="book-meta">👤 托比・奥德 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493782-80c088?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>牛津科普读本（第一辑）</strong>
+<div class="book-meta">👤 克劳塞维茨等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375496395-3eb1b0?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>国家地理终极观星指南</strong>
+<div class="book-meta">👤 霍华德・施耐德 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375496701-44ca96?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>牛津通识课：理学套装（全4册）</strong>
+<div class="book-meta">👤 麦克・戈德史密斯等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375496950-51ea21?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>0次与10000次</strong>
+<div class="book-meta">👤 吉塔・雅各布 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497181-c8dc00?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 管理
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 613 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>灰犀牛：个人、组织如何与风险共舞</strong>
+<div class="book-meta">👤 米歇尔・渥克 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498000-f693d7?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>长期主义</strong>
+<div class="book-meta">👤 高德威 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498969-41de87?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>福格行为模型</strong>
+<div class="book-meta">👤 B.J.福格 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499539-38be34?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>像高手一样行动</strong>
+<div class="book-meta">👤 丹尼尔・科伊尔 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375500049-7f0f39?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>高效的组织都是圆的</strong>
+<div class="book-meta">👤 戴维・珀金斯 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375500100-7e145d?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>马尔科姆·格拉德威尔系列（套装共6册）</strong>
+<div class="book-meta">👤 马尔科姆・格拉德威尔 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375500292-299023?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>时间管理</strong>
+<div class="book-meta">👤 吉姆・兰德尔 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375500340-640c65?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>像高手一样解决问题</strong>
+<div class="book-meta">👤 伯纳德・加雷特等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375500307-6d78d2?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>影响力：全新升级版</strong>
+<div class="book-meta">👤 罗伯特・西奥迪尼 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375500478-9f34c6?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>鹿智者的法则</strong>
+<div class="book-meta">👤 丹・米尔曼 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375501204-e161de?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 社会
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 558 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>现代政治的正当性基础</strong>
+<div class="book-meta">👤 周濂 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491484-c06fa6?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>地狱里的希望</strong>
+<div class="book-meta">👤 丹・波托洛蒂 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375492060-2c8fad?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>贾雷德·戴蒙德作品集（套装共4册）</strong>
+<div class="book-meta">👤 贾雷德・戴蒙德 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375492300-e6d81a?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>吉姆·罗杰斯的大预测</strong>
+<div class="book-meta">👤 吉姆・罗杰斯 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375492939-a2a582?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>温铁军套装（共5册）</strong>
+<div class="book-meta">👤 温铁军 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493437-a29263?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>网上遗产</strong>
+<div class="book-meta">👤 伊莱恩・卡斯凯特 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493404-9f5bf0?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>俄国史译（全7册）</strong>
+<div class="book-meta">👤 伊利娜・谢尔盖耶夫娜・雷巴乔诺克等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493761-ea4345?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>运气的诱饵</strong>
+<div class="book-meta">👤 娜塔莎・道・舒尔 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493695-e4930e?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>在中国大地上</strong>
+<div class="book-meta">👤 保罗・索鲁 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493722-348f90?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>单身偏见</strong>
+<div class="book-meta">👤 克莱尔・佩恩 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493863-2752fc?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 推理
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 531 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>海神的后裔</strong>
+<div class="book-meta">👤 宫部美雪 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375492165-c1f419?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>女郎她死了</strong>
+<div class="book-meta">👤 约翰・迪克森・卡尔 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497154-47f407?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>无颜的肖像</strong>
+<div class="book-meta">👤 连城三纪彦 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498012-7fc0cd?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>土楼杀人事件</strong>
+<div class="book-meta">👤 青稞 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498258-e31108?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>白兔</strong>
+<div class="book-meta">👤 伊坂幸太郎 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498687-16a448?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>陈舜臣作品精选集（套装共20册）</strong>
+<div class="book-meta">👤 陈舜臣 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498732-db7b9b?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>天涯双探4：双城血案</strong>
+<div class="book-meta">👤 七名 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498834-6b8e51?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>非常疑犯</strong>
+<div class="book-meta">👤 红眸 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499008-3c6677?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>静默的铁证</strong>
+<div class="book-meta">👤 米烛光 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499452-818cac?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>时空旅行者的沙漏</strong>
+<div class="book-meta">👤 方丈贵惠 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499554-129728?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 经济
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 487 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>金钱革命</strong>
+<div class="book-meta">👤 安妮・博登 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375490917-6f069c?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>智造中国</strong>
+<div class="book-meta">👤 马兆远 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491232-200000?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>原则：应对变化中的世界秩序</strong>
+<div class="book-meta">👤 瑞・达利欧 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375492075-4f7b4c?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>进化的力量</strong>
+<div class="book-meta">👤 刘润 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375492024-2f20d3?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>吉姆·罗杰斯的大预测</strong>
+<div class="book-meta">👤 吉姆・罗杰斯 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375492939-a2a582?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>房价的逻辑</strong>
+<div class="book-meta">👤 徐远 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493002-d88db9?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>温铁军套装（共5册）</strong>
+<div class="book-meta">👤 温铁军 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493437-a29263?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>变量4</strong>
+<div class="book-meta">👤 何帆 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493833-c77a73?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>芯片陷阱</strong>
+<div class="book-meta">👤 马克・拉叙斯 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375495186-db8ef2?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>超级资管</strong>
+<div class="book-meta">👤 乔永远/孔祥 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497304-dc9d0d?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 哲学
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 431 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>前行笔记之耕耘心田</strong>
+<div class="book-meta">👤 希阿荣博堪布 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491703-fada1f?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>感知•理知•自我认知</strong>
+<div class="book-meta">👤 陈嘉映 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491952-add17f?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>毓老师说系列（共十八册）</strong>
+<div class="book-meta">👤 爱新觉罗・毓鋆讲述 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375492564-bdeea5?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>佛系：中国人的生活智慧</strong>
+<div class="book-meta">👤 果麦文化 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493296-11aa38?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>攀登尼采</strong>
+<div class="book-meta">👤 约翰・卡格 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493479-e7baa8?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>西方古典学术史（第一卷）</strong>
+<div class="book-meta">👤 约翰・埃德温・桑兹 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497643-d4630d?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>刘擎西方现代思想讲义</strong>
+<div class="book-meta">👤 刘擎 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498162-6d669a?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>哲学100问（套装共3册）</strong>
+<div class="book-meta">👤 书杰 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498444-830a41?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>西方现代思想家精品译丛（18卷）</strong>
+<div class="book-meta">👤 哈耶克等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498924-4e23e7?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>假如猫狗会说话</strong>
+<div class="book-meta">👤 拉斯・弗雷德里克·H.史文德森 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499347-09c400?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 传记
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 413 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>达·芬奇传：自由的心灵</strong>
+<div class="book-meta">👤 查尔斯・尼科尔 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491400-800bfb?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>斯大林传</strong>
+<div class="book-meta">👤 德米特里・安东诺维奇・沃尔科戈诺夫 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491829-e707fa?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>陀思妥耶夫斯基传</strong>
+<div class="book-meta">👤 安德里亚斯・古斯基 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498042-d0a3d3?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>帝国浮沉：关于拿破仑一世的私人回忆（全2册）</strong>
+<div class="book-meta">👤 克劳德・梅尼瓦尔 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498120-b235b7?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>伊藤博文：近代日本奠基人</strong>
+<div class="book-meta">👤 伊藤之雄 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498831-0dc067?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>德意志理想主义的诞生：席勒传</strong>
+<div class="book-meta">👤 吕迪格尔・萨弗兰斯基 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499365-050061?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>牛顿传</strong>
+<div class="book-meta">👤 詹姆斯・格雷克 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499524-4bd6cf?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>绯闻艺术史</strong>
+<div class="book-meta">👤 林微云 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499971-4d8b4d?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>卡尔·拉格斐传</strong>
+<div class="book-meta">👤 洛朗・阿朗-卡龙 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375500028-a96942?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>译文传记作品系列（套装共15册）</strong>
+<div class="book-meta">👤 斯特凡・茨威格 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375500337-e1be2a?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 美国
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 399 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>美国四百年</strong>
+<div class="book-meta">👤 布・斯里尼瓦桑 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375490923-e9b635?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>坠落与重生：911的故事</strong>
+<div class="book-meta">👤 米切尔・祖科夫 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497535-e9ce53?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>大萧条前夜的繁荣与疯狂</strong>
+<div class="book-meta">👤 比尔・布莱森 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498222-e55345?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>美利坚的民族</strong>
+<div class="book-meta">👤 科林・伍达德 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499449-5b4652?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>辉煌信标：美国灯塔史</strong>
+<div class="book-meta">👤 埃里克・杰・多林 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499494-7adcd3?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>达摩流浪者</strong>
+<div class="book-meta">👤 杰克・凯鲁亚克 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375501198-87ebe7?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>平原上的城市</strong>
+<div class="book-meta">👤 科马克・麦卡锡 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375501537-1986a4?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>帝国统治的逻辑</strong>
+<div class="book-meta">👤 赫尔弗里德・明克勒 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375503304-037ef1?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>被误解的盐</strong>
+<div class="book-meta">👤 詹姆斯・迪尼科兰托尼奥 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375504426-dfa18b?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>美国的反智传统</strong>
+<div class="book-meta">👤 理查德・霍夫施塔特 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375506823-0cc3c2?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 心理
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 396 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>我们为何无聊</strong>
+<div class="book-meta">👤 詹姆斯・丹克特等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375490977-1e5ce8?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>认知工具</strong>
+<div class="book-meta">👤 塞西莉亚・海耶斯 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491715-7dc597?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>动机与人格</strong>
+<div class="book-meta">👤 亚伯拉罕・马斯洛 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375495429-a9bbbc?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>0次与10000次</strong>
+<div class="book-meta">👤 吉塔・雅各布 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497181-c8dc00?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>疲劳自救手册</strong>
+<div class="book-meta">👤 玛丽・伯吉斯/特鲁迪・查尔德 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497475-e986a2?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>沙发上的心理学</strong>
+<div class="book-meta">👤 菲利帕・佩里 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497946-e0bf91?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>新乌合之众</strong>
+<div class="book-meta">👤 迈赫迪・穆萨伊德 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497907-396975?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>十种人性</strong>
+<div class="book-meta">👤 德克斯特・迪亚斯 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498141-62f242?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>译文心理分析作品集（套装共12册）</strong>
+<div class="book-meta">👤 西格蒙德・弗洛伊德等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498315-9e8afd?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>贪婪的多巴胺</strong>
+<div class="book-meta">👤 丹尼尔・利伯曼等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498459-018013?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 悬疑
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 393 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>耳语之人</strong>
+<div class="book-meta">👤 约翰・迪克森・卡尔 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493566-c34524?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>反骗案中案·完结版（全5册）</strong>
+<div class="book-meta">👤 常书欣 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375495066-b34054?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>回到种子里去</strong>
+<div class="book-meta">👤 加西亚・马尔克斯 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375495486-3c8ab0?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>人间我来过</strong>
+<div class="book-meta">👤 那多 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375495513-a7fbae?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>那多经典作品合集（12册合集）</strong>
+<div class="book-meta">👤 那多 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498663-8c7a04?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>天涯双探4：双城血案</strong>
+<div class="book-meta">👤 七名 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498834-6b8e51?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>黄雀计划</strong>
+<div class="book-meta">👤 鬼庖丁 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498957-155512?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>静默的铁证</strong>
+<div class="book-meta">👤 米烛光 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499452-818cac?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>恶寒</strong>
+<div class="book-meta">👤 伊冈瞬 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499659-21ca24?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>全员嫌疑人</strong>
+<div class="book-meta">👤 大山诚一郎 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499701-1e03fc?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 商业
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 387 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>海尔制</strong>
+<div class="book-meta">👤 胡国栋 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491937-798132?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>进化的力量</strong>
+<div class="book-meta">👤 刘润 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375492024-2f20d3?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>未来呼啸而来</strong>
+<div class="book-meta">👤 彼得・戴曼迪斯 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375496473-11e887?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>生生不息</strong>
+<div class="book-meta">👤 范海涛 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497664-326a21?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>常识的力量</strong>
+<div class="book-meta">👤 梁宇峰 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498927-eace22?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>长期主义</strong>
+<div class="book-meta">👤 高德威 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498969-41de87?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>底层逻辑：看清这个世界的底牌</strong>
+<div class="book-meta">👤 刘润 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499026-8d4b4e?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>像高手一样解决问题</strong>
+<div class="book-meta">👤 伯纳德・加雷特等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375500307-6d78d2?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>影响力：全新升级版</strong>
+<div class="book-meta">👤 罗伯特・西奥迪尼 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375500478-9f34c6?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>贝佐斯传</strong>
+<div class="book-meta">👤 哈罗德・布鲁姆 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375500592-39d6e8?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 金融
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 370 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>金钱革命</strong>
+<div class="book-meta">👤 安妮・博登 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375490917-6f069c?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>财富是认知的变现</strong>
+<div class="book-meta">👤 舒泰峰 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375490950-03b116?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>耐心的资本</strong>
+<div class="book-meta">👤 维多利亚・伊凡希娜/乔希・勒纳 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375495492-4e8778?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>超级资管</strong>
+<div class="book-meta">👤 乔永远/孔祥 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497304-dc9d0d?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>行为金融学</strong>
+<div class="book-meta">👤 詹姆斯・蒙蒂尔 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497613-50ebe9?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>新金融帝国</strong>
+<div class="book-meta">👤 田中道昭 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497616-4a5b13?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>中国资本市场变革</strong>
+<div class="book-meta">👤 肖钢 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497634-635389?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>行为投资者</strong>
+<div class="book-meta">👤 丹尼尔・克罗斯比 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498837-ac3b7a?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>投资核心资产</strong>
+<div class="book-meta">👤 王德伦等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499194-e70303?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>美国货币史（精校本）</strong>
+<div class="book-meta">👤 米尔顿・弗里德曼 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375499098-0300b3?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 随笔
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 368 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>长岛小记</strong>
+<div class="book-meta">👤 郭红 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491448-bef079?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>那间街角的茶铺</strong>
+<div class="book-meta">👤 王笛 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491775-2dbac0?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>读书是最对得起付出的一件事</strong>
+<div class="book-meta">👤 梁晓声 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491988-526c88?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>我爱这哭不出来的浪漫</strong>
+<div class="book-meta">👤 严明 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375492279-da9a63?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>借山而居（珍藏版）</strong>
+<div class="book-meta">👤 张二冬 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375492669-bdbbd4?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>躺平</strong>
+<div class="book-meta">👤 贝恩德・布伦纳 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493068-3a03e2?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>声誉</strong>
+<div class="book-meta">👤 唐诺 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493275-278681?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>圈外编辑</strong>
+<div class="book-meta">👤 都筑响一 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493812-a4c0be?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>新冠时代的我们</strong>
+<div class="book-meta">👤 保罗・乔尔达诺 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375495420-65c573?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>再见，平成时代</strong>
+<div class="book-meta">👤 新井一二三 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375496449-4bf150?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 投资
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 365 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>财富是认知的变现</strong>
+<div class="book-meta">👤 舒泰峰 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375490950-03b116?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>中高净值人群财富管理的顶层设计（全5册）</strong>
+<div class="book-meta">👤 李升等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491427-50aa01?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>价值投资的十项核心原则</strong>
+<div class="book-meta">👤 詹姆斯・蒙蒂尔 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491475-157297?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>攻守：可转债投资实用手册</strong>
+<div class="book-meta">👤 饕餮海等 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375492006-a0e7e3?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>巴菲特之道（原书第3版）（典藏版）</strong>
+<div class="book-meta">👤 罗伯特・哈格斯特朗 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375492738-ab0390?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>房价的逻辑</strong>
+<div class="book-meta">👤 徐远 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493002-d88db9?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>超级资管</strong>
+<div class="book-meta">👤 乔永远/孔祥 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497304-dc9d0d?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>行为金融学</strong>
+<div class="book-meta">👤 詹姆斯・蒙蒂尔 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375497613-50ebe9?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>股票魔法师3</strong>
+<div class="book-meta">👤 Mark Minervini ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498612-5bb5b5?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>趋势投资</strong>
+<div class="book-meta">👤 丁圣元 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375498825-647703?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
+
+
+<div class="category-section">
+
+## 📂 思维
+
+### 🌍 Language: ZH
+
+#### ⭐ Level: Unknown
+
+<p class="note-text">*（共 353 本，显示前 10 本）*</p>
+
+<div class="book-item">
+<strong>认知工具</strong>
+<div class="book-meta">👤 塞西莉亚・海耶斯 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375491715-7dc597?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>拆掉思维里的墙（白金升级版）</strong>
+<div class="book-meta">👤 古典 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375493257-0dad21?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>人生不必太用力</strong>
+<div class="book-meta">👤 埃克哈特・托利 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375500094-713b9c?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>鹿智者的法则</strong>
+<div class="book-meta">👤 丹・米尔曼 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375501204-e161de?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>批判性思维与说服性写作</strong>
+<div class="book-meta">👤 路易丝・卡茨 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375501387-c9409e?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>大脑的一天·鹈鹕丛书</strong>
+<div class="book-meta">👤 苏珊・格林菲尔德 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375501504-478cce?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>九宫格写作法</strong>
+<div class="book-meta">👤 山口拓朗 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375508920-0056c2?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>我是谁：心理学实证研究社会思维</strong>
+<div class="book-meta">👤 戴维・迈尔斯/琼・特韦奇 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375509499-e67aab?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>深度影响</strong>
+<div class="book-meta">👤 崔璀 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375509760-4833a9?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+<div class="book-item">
+<strong>五维思考法</strong>
+<div class="book-meta">👤 爱德华・伯格/迈克尔・斯塔伯德 ｜ 📥 epub, mobi, azw3</div>
+<a href="https://url89.ctfile.com/f/31084289-1375510294-3b55d2?p=8866" target="_blank" rel="noopener" class="book-link">📥 下载</a>
+</div>
+
+
+</div>
 
 
 
 <hr>
 
-<p>*还有 980 个分类未显示，请使用搜索功能查找。*</p>
+<p class="note-text">💡 还有 980 个分类未显示，请使用搜索功能查找。</p>
 
 </header>
 
 <footer class="footer-note">
-    <p>📚 电子书下载宝库 | 自动生成，请勿手动修改</p>
+    <p>📚 电子书下载宝库 </p>
     <p style="margin-top: 8px; font-size: 12px;">
         <a href="https://github.com/jbiaojerry/ebook-treasure-chest" target="_blank" rel="noopener">GitHub 仓库</a> |
         <a href="README.md" target="_blank">使用说明</a>

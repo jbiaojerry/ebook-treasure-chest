@@ -148,10 +148,11 @@ def render_content(grouped, stats=None):
     # 限制显示的分类数量（避免页面过长）
     max_categories = 20
     if len(sorted_categories) > max_categories:
-        lines.append(f"*注：共 {len(category_counts)} 个分类，以下显示前 {max_categories} 个热门分类的书籍。使用搜索功能可查找所有书籍。*\n\n")
+        lines.append(f"<p class=\"note-text\">💡 注：共 {len(category_counts)} 个分类，以下显示前 {max_categories} 个热门分类的书籍。使用搜索功能可查找所有书籍。</p>\n\n")
         sorted_categories = sorted_categories[:max_categories]
 
     for category in sorted_categories:
+        lines.append(f"<div class=\"category-section\">\n")
         lines.append(f"## 📂 {category}\n")
 
         for language in sorted(grouped[category].keys()):
@@ -165,22 +166,25 @@ def render_content(grouped, stats=None):
                 max_books_per_section = 10
                 if len(books_list) > max_books_per_section:
                     books_list = books_list[:max_books_per_section]
-                    lines.append(f"*（共 {len(grouped[category][language][level])} 本，显示前 {max_books_per_section} 本）*\n")
+                    lines.append(f"<p class=\"note-text\">*（共 {len(grouped[category][language][level])} 本，显示前 {max_books_per_section} 本）*</p>\n")
 
                 for b in books_list:
                     formats = ", ".join(b.get("formats", []))
+                    author = b.get('author', '未知')
                     lines.append(
-                        f"- **{b['title']}** — {b.get('author', '未知')}  \n"
-                        f"  格式：{formats} ｜ "
-                        f"[下载链接]({b['link']})\n"
+                        f"<div class=\"book-item\">\n"
+                        f"<strong>{b['title']}</strong>\n"
+                        f"<div class=\"book-meta\">👤 {author} ｜ 📥 {formats}</div>\n"
+                        f"<a href=\"{b['link']}\" target=\"_blank\" rel=\"noopener\" class=\"book-link\">📥 下载</a>\n"
+                        f"</div>\n"
                     )
 
                 lines.append("")
         
-        lines.append("")
+        lines.append("</div>\n\n")
 
     if len(sorted_categories) < len(grouped.keys()):
-        lines.append(f"\n---\n\n*还有 {len(grouped.keys()) - len(sorted_categories)} 个分类未显示，请使用搜索功能查找。*\n")
+        lines.append(f"\n<hr>\n\n<p class=\"note-text\">💡 还有 {len(grouped.keys()) - len(sorted_categories)} 个分类未显示，请使用搜索功能查找。</p>\n")
 
     return "\n".join(lines)
 
@@ -376,101 +380,148 @@ def generate_html(md_content):
     <style>
         * {{
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }}
         
         body {{
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "Microsoft YaHei", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
             line-height: 1.6;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
             color: #24292e;
-            background-color: #ffffff;
+            background: linear-gradient(to bottom, #f6f8fa 0%, #ffffff 200px);
+            min-height: 100vh;
         }}
         
         @media (max-width: 768px) {{
             body {{
-                padding: 10px;
+                padding: 15px;
             }}
         }}
         
-        h1, h2, h3, h4 {{
-            margin-top: 24px;
-            margin-bottom: 16px;
-            font-weight: 600;
-            line-height: 1.25;
+        header {{
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
         }}
         
         h1 {{
-            font-size: 2em;
-            border-bottom: 2px solid #eaecef;
-            padding-bottom: 0.3em;
-            margin-top: 0;
+            font-size: 2.5em;
+            margin: 0 0 16px 0;
+            background: linear-gradient(135deg, #0366d6 0%, #0056b3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            text-align: center;
         }}
         
         h2 {{
-            font-size: 1.5em;
-            border-bottom: 1px solid #eaecef;
-            padding-bottom: 0.3em;
+            font-size: 1.75em;
+            margin: 32px 0 20px 0;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #0366d6;
+            color: #24292e;
+            font-weight: 600;
+            position: relative;
         }}
         
-        h3 {{ font-size: 1.25em; }}
-        h4 {{ font-size: 1em; }}
+        h2::before {{
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #0366d6, #0056b3);
+            border-radius: 2px;
+        }}
+        
+        h3 {{
+            font-size: 1.3em;
+            margin: 24px 0 12px 0;
+            color: #586069;
+            font-weight: 500;
+        }}
+        
+        h4 {{
+            font-size: 1.1em;
+            margin: 16px 0 8px 0;
+            color: #6a737d;
+            font-weight: 500;
+        }}
         
         a {{
             color: #0366d6;
             text-decoration: none;
-            transition: color 0.2s ease;
+            transition: all 0.2s ease;
+            font-weight: 500;
         }}
         
         a:hover {{
-            text-decoration: underline;
             color: #0056b3;
+            text-decoration: underline;
         }}
         
         a:focus {{
             outline: 2px solid #0366d6;
             outline-offset: 2px;
-        }}
-        
-        blockquote {{
-            padding: 12px 16px;
-            color: #6a737d;
-            border-left: 0.25em solid #dfe2e5;
-            margin: 16px 0;
-            background-color: #f6f8fa;
-            border-radius: 4px;
-        }}
-        
-        hr {{
-            height: 0.25em;
-            padding: 0;
-            margin: 32px 0;
-            background-color: #e1e4e8;
-            border: 0;
             border-radius: 2px;
         }}
         
+        blockquote {{
+            padding: 16px 20px;
+            color: #586069;
+            border-left: 4px solid #0366d6;
+            margin: 20px 0;
+            background: linear-gradient(to right, #f6f8fa 0%, #ffffff 100%);
+            border-radius: 6px;
+            font-style: italic;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }}
+        
+        hr {{
+            height: 1px;
+            margin: 40px 0;
+            background: linear-gradient(90deg, transparent, #e1e4e8, transparent);
+            border: 0;
+        }}
+        
         .search-container {{
-            margin: 24px 0;
+            margin: 30px 0;
             position: relative;
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
         }}
         
         input[type="text"] {{
             width: 100%;
-            padding: 12px 16px;
+            padding: 14px 18px;
             font-size: 16px;
-            border: 2px solid #0366d6;
-            border-radius: 6px;
+            border: 2px solid #d1d9e0;
+            border-radius: 8px;
             box-sizing: border-box;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-            background-color: #fff;
+            transition: all 0.3s ease;
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }}
+        
+        input[type="text"]:hover {{
+            border-color: #0366d6;
+            box-shadow: 0 2px 6px rgba(3, 102, 214, 0.15);
         }}
         
         input[type="text"]:focus {{
             outline: none;
-            border-color: #0056b3;
-            box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.1);
+            border-color: #0366d6;
+            box-shadow: 0 0 0 4px rgba(3, 102, 214, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
         }}
         
         input[type="text"]::placeholder {{
@@ -478,12 +529,15 @@ def generate_html(md_content):
         }}
         
         .search-hint {{
-            margin-top: 10px;
+            margin-top: 12px;
             color: #586069;
             font-size: 14px;
             display: flex;
             align-items: center;
             gap: 8px;
+            padding: 8px 12px;
+            background: #f6f8fa;
+            border-radius: 6px;
         }}
         
         #search-results {{
@@ -496,60 +550,219 @@ def generate_html(md_content):
             padding: 40px 20px;
             color: #586069;
             font-size: 16px;
+            background: #f6f8fa;
+            border-radius: 8px;
         }}
         
         .loading-indicator::before {{
             content: "⏳ ";
+            animation: pulse 1.5s ease-in-out infinite;
+        }}
+        
+        @keyframes pulse {{
+            0%, 100% {{ opacity: 1; }}
+            50% {{ opacity: 0.5; }}
         }}
         
         ul {{
-            padding-left: 2em;
+            padding-left: 0;
             margin: 16px 0;
+            list-style: none;
         }}
         
         li {{
-            margin: 0.5em 0;
+            margin: 12px 0;
+            padding: 12px 16px;
+            background: #ffffff;
+            border-left: 3px solid #0366d6;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }}
+        
+        li:hover {{
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(3, 102, 214, 0.15);
+            border-left-width: 4px;
+        }}
+        
+        li strong {{
+            color: #24292e;
+            font-size: 1.05em;
         }}
         
         p {{
             margin: 16px 0;
+            line-height: 1.7;
         }}
         
         .overview-stats {{
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin: 20px 0;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
         }}
         
         .stat-item {{
-            padding: 16px;
-            background: #f6f8fa;
-            border-radius: 6px;
+            padding: 24px;
+            background: linear-gradient(135deg, #ffffff 0%, #f6f8fa 100%);
+            border-radius: 10px;
             border: 1px solid #e1e4e8;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            text-align: center;
+        }}
+        
+        .stat-item:hover {{
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(3, 102, 214, 0.15);
+            border-color: #0366d6;
+        }}
+        
+        .stat-item span {{
+            display: block;
+            font-size: 14px;
+            color: #586069;
+            margin-bottom: 8px;
+            font-weight: 500;
         }}
         
         .stat-item strong {{
             display: block;
-            font-size: 1.2em;
-            color: #0366d6;
+            font-size: 1.8em;
+            background: linear-gradient(135deg, #0366d6 0%, #0056b3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
             margin-top: 4px;
         }}
         
         @media (max-width: 600px) {{
             .overview-stats {{
                 grid-template-columns: 1fr;
+                gap: 16px;
+            }}
+            
+            h1 {{
+                font-size: 2em;
+            }}
+            
+            h2 {{
+                font-size: 1.5em;
             }}
         }}
         
-        .footer-note {{
-            margin-top: 40px;
+        .category-section {{
+            background: #ffffff;
+            padding: 24px;
+            margin: 24px 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e1e4e8;
+            transition: all 0.3s ease;
+        }}
+        
+        .category-section:hover {{
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border-color: #0366d6;
+        }}
+        
+        .book-item {{
             padding: 16px;
+            margin: 12px 0;
             background: #f6f8fa;
+            border-radius: 8px;
+            border-left: 4px solid #0366d6;
+            transition: all 0.2s ease;
+        }}
+        
+        .book-item:hover {{
+            background: #e8f4fd;
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(3, 102, 214, 0.1);
+        }}
+        
+        .book-item strong {{
+            color: #24292e;
+            font-size: 1.05em;
+            display: block;
+            margin-bottom: 6px;
+        }}
+        
+        .book-item .book-meta {{
+            color: #586069;
+            font-size: 0.9em;
+            margin: 8px 0;
+        }}
+        
+        .book-item .book-link {{
+            display: inline-block;
+            margin-top: 8px;
+            padding: 6px 14px;
+            background: #0366d6;
+            color: #ffffff !important;
             border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            text-decoration: none !important;
+        }}
+        
+        .book-item .book-link:hover {{
+            background: #0056b3;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(3, 102, 214, 0.3);
+        }}
+        
+        .note-text {{
+            padding: 12px 16px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 6px;
+            color: #856404;
+            font-size: 14px;
+            margin: 20px 0;
+        }}
+        
+        .footer-note {{
+            margin-top: 60px;
+            padding: 24px;
+            background: linear-gradient(135deg, #f6f8fa 0%, #ffffff 100%);
+            border-radius: 12px;
             text-align: center;
             color: #586069;
             font-size: 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-top: 3px solid #0366d6;
+        }}
+        
+        .footer-note a {{
+            margin: 0 8px;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }}
+        
+        .footer-note a:hover {{
+            background: #e8f4fd;
+            text-decoration: none;
+        }}
+        
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {{
+            width: 10px;
+        }}
+        
+        ::-webkit-scrollbar-track {{
+            background: #f1f1f1;
+        }}
+        
+        ::-webkit-scrollbar-thumb {{
+            background: #0366d6;
+            border-radius: 5px;
+        }}
+        
+        ::-webkit-scrollbar-thumb:hover {{
+            background: #0056b3;
         }}
     </style>
 </head>
@@ -559,7 +772,7 @@ def generate_html(md_content):
 </header>
 
 <footer class="footer-note">
-    <p>📚 电子书下载宝库 | 自动生成，请勿手动修改</p>
+    <p>📚 电子书下载宝库 </p>
     <p style="margin-top: 8px; font-size: 12px;">
         <a href="https://github.com/jbiaojerry/ebook-treasure-chest" target="_blank" rel="noopener">GitHub 仓库</a> |
         <a href="README.md" target="_blank">使用说明</a>
@@ -594,7 +807,6 @@ def main():
 
     md_parts = []
     md_parts.append("# 📚 Ebook Treasure Chest\n")
-    md_parts.append("> 自动生成，请勿手动修改\n\n---\n")
     md_parts.append(render_overview(total_books, categories_count, languages, levels))
     md_parts.append("\n---\n")
     md_parts.append(render_search_ui())
