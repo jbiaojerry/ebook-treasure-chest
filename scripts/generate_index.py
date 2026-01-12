@@ -124,16 +124,31 @@ def render_search_ui():
 """
 
 
-def render_content(grouped):
+def render_content(grouped, stats=None):
     lines = []
     
-    # 限制显示的分类数量（避免页面过长）
-    # 如果分类太多，只显示前20个热门分类
-    sorted_categories = sorted(grouped.keys())
-    max_categories = 20
+    # 计算每个分类的书籍数量
+    category_counts = {}
+    for category, languages in grouped.items():
+        count = sum(len(books) for lang_dict in languages.values() for books in lang_dict.values())
+        category_counts[category] = count
     
+    # 按书籍数量排序，优先显示热门分类
+    sorted_categories = sorted(category_counts.keys(), key=lambda x: category_counts[x], reverse=True)
+    
+    # 优先显示用户指定的热门分类
+    priority_categories = ["文学", "沟通", "励志", "经典", "历史", "科普", "管理", "社会", "推理", "经济", "哲学", "传记"]
+    
+    # 重新排序：优先分类在前，然后按数量排序
+    priority_set = set(priority_categories)
+    priority_list = [cat for cat in priority_categories if cat in sorted_categories]
+    other_list = [cat for cat in sorted_categories if cat not in priority_set]
+    sorted_categories = priority_list + other_list
+    
+    # 限制显示的分类数量（避免页面过长）
+    max_categories = 20
     if len(sorted_categories) > max_categories:
-        lines.append(f"*注：共 {len(sorted_categories)} 个分类，以下显示前 {max_categories} 个分类的书籍。使用搜索功能可查找所有书籍。*\n\n")
+        lines.append(f"*注：共 {len(category_counts)} 个分类，以下显示前 {max_categories} 个热门分类的书籍。使用搜索功能可查找所有书籍。*\n\n")
         sorted_categories = sorted_categories[:max_categories]
 
     for category in sorted_categories:
@@ -584,7 +599,7 @@ def main():
     md_parts.append("\n---\n")
     md_parts.append(render_search_ui())
     md_parts.append("\n---\n")
-    md_parts.append(render_content(grouped))
+    md_parts.append(render_content(grouped, stats))
 
     md_content = "\n".join(md_parts)
     
