@@ -1,10 +1,12 @@
 import yaml
+import json
 from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
 BOOKS_FILE = ROOT / "metadata" / "books.yaml"
 OUTPUT_FILE = ROOT / "docs" / "index.md"
+JSON_FILE = ROOT / "docs" / "books.json"
 
 
 def load_books():
@@ -92,6 +94,12 @@ def main():
 
     OUTPUT_FILE.parent.mkdir(exist_ok=True)
     OUTPUT_FILE.write_text("\n".join(md), encoding="utf-8")
+
+    # 生成给前端用的搜索数据
+    JSON_FILE.write_text(
+        json.dumps(books, ensure_ascii=False, indent=2),
+        encoding="utf-8"
+    )
 
     print("✅ index.md updated")
 
