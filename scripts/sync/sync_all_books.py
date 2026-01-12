@@ -25,6 +25,7 @@ def main():
     parser.add_argument('--skip-backup', action='store_true', help='跳过备份步骤')
     parser.add_argument('--skip-find-id', action='store_true', help='跳过查找最大ID步骤（需要提供--max-id）')
     parser.add_argument('--start-id', type=int, default=1, help='起始书籍ID（默认：1）')
+    parser.add_argument('--batch-size', type=int, help='分批处理大小（例如：20000，每次处理2万本书）。如果不指定，则一次性处理所有书籍')
     
     args = parser.parse_args()
     
@@ -80,6 +81,12 @@ def main():
     print("-" * 80)
     print(f"📊 处理范围: ID {args.start_id} - {max_book_id}")
     print(f"📊 预计书籍数量: {max_book_id - args.start_id + 1}")
+    
+    # 方案3：分批处理支持
+    if args.batch_size:
+        total_books = max_book_id - args.start_id + 1
+        num_batches = (total_books + args.batch_size - 1) // args.batch_size
+        print(f"📦 分批处理: 每批 {args.batch_size} 本，共 {num_batches} 批")
     print()
     
     # 设置环境变量，确保使用正式目录md/
@@ -91,20 +98,51 @@ def main():
     import asyncio
     
     print("⏳ 开始处理，这可能需要较长时间...")
-    print("💡 提示：可以随时中断（Ctrl+C），下次运行会自动跳过已处理的ID")
-    print(f"💡 预计时间：约 {((max_book_id - args.start_id + 1) * 0.5 / 60):.1f} 分钟（基于0.5秒/请求）\n")
+    print("💡 提示：可以随时中断（Ctrl+C），下次运行会自动跳过已处理的ID（断点续传）")
+    if args.batch_size:
+        print(f"💡 分批处理：每批约 {args.batch_size * 0.5 / 60:.1f} 分钟")
+    print(f"💡 预计总时间：约 {((max_book_id - args.start_id + 1) * 0.5 / 60):.1f} 分钟（基于0.5秒/请求）")
+    print(f"💡 超时保护：600分钟（10小时）\n")
     
     sync_success = False
     try:
-        # 调用test_batch_sync的main函数，传入ID范围
-        asyncio.run(test_batch_sync.main(args.start_id, max_book_id))
+        # 方案3：分批处理
+        if args.batch_size:
+            current_start = args.start_id
+            batch_num = 1
+            
+            while current_start <= max_book_id:
+                current_end = min(current_start + args.batch_size - 1, max_book_id)
+                
+                print("\n" + "=" * 80)
+                print(f"📦 批次 {batch_num}: 处理 ID {current_start} - {current_end}")
+                print("=" * 80)
+                
+                # 调用test_batch_sync的main函数，传入当前批次的范围
+                asyncio.run(test_batch_sync.main(current_start, current_end))
+                
+                print(f"\n✅ 批次 {batch_num} 完成")
+                
+                # 准备下一批
+                current_start = current_end + 1
+                batch_num += 1
+                
+                # 如果不是最后一批，稍作停顿
+                if current_start <= max_book_id:
+                    print("⏸️  批次间暂停 5 秒...")
+                    import time
+                    time.sleep(5)
+        else:
+            # 一次性处理所有书籍
+            asyncio.run(test_batch_sync.main(args.start_id, max_book_id))
+        
         sync_success = True
         print("\n" + "=" * 80)
         print("✅ 全量同步完成！")
         print("=" * 80)
     except KeyboardInterrupt:
         print("\n\n⚠️  用户中断，已保存进度")
-        print("   下次运行时会自动从上次中断的地方继续")
+        print("   下次运行时会自动从上次中断的地方继续（断点续传）")
         return
     except Exception as e:
         print(f"\n❌ 执行出错: {e}")
