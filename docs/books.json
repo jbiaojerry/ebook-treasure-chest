@@ -1,0 +1,47 @@
+[
+  {
+    "title": "Clean Code",
+    "author": "Robert C. Martin",
+    "category": "Programming",
+    "language": "EN",
+    "level": "Intermediate",
+    "formats": [
+      "PDF",
+      "EPUB"
+    ],
+    "link": "https://example.com/clean-code"
+  },
+  {
+    "title": "Go 语言设计与实现",
+    "author": "郝林",
+    "category": "Programming",
+    "language": "ZH",
+    "level": "Advanced",
+    "formats": [
+      "PDF"
+    ],
+    "link": "https://example.com/go-design"
+  },
+  {
+    "title": "Linear Algebra Done Right",
+    "author": "Sheldon Axler",
+    "category": "Mathematics",
+    "language": "EN",
+    "level": "Beginner",
+    "formats": [
+      "PDF"
+    ],
+    "link": "https://example.com/linear-algebra"
+  },
+  {
+    "title": "test",
+    "author": "Sheldon Axler",
+    "category": "Mathematics",
+    "language": "EN",
+    "level": "Beginner",
+    "formats": [
+      "PDF"
+    ],
+    "link": "https://example.com/linear-algebra"
+  }
+]

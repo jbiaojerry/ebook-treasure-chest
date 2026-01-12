@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Ebook Treasure Chest</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #24292e;
+        }
+        h1, h2, h3, h4 {
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        h1 { font-size: 2em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }
+        h2 { font-size: 1.5em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }
+        h3 { font-size: 1.25em; }
+        h4 { font-size: 1em; }
+        a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        blockquote {
+            padding: 0 1em;
+            color: #6a737d;
+            border-left: 0.25em solid #dfe2e5;
+            margin: 0;
+        }
+        hr {
+            height: 0.25em;
+            padding: 0;
+            margin: 24px 0;
+            background-color: #e1e4e8;
+            border: 0;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        #search-results {
+            margin-top: 20px;
+        }
+        #search-results p {
+            margin: 10px 0;
+        }
+        ul {
+            padding-left: 2em;
+        }
+        li {
+            margin: 0.25em 0;
+        }
+        p {
+            margin: 16px 0;
+        }
+    </style>
+</head>
+<body>
+<h1>📚 Ebook Treasure Chest</h1>
+
+<blockquote>自动生成，请勿手动修改</blockquote>
+
+<hr>
+
+<h2>📊 Overview</h2>
+
+<ul>
+<li>📘 Total books: <strong>4</strong></li>
+<li>📂 Categories: <strong>Mathematics / Programming</strong></li>
+<li>🌍 Languages: <strong>EN / ZH</strong></li>
+<li>⭐ Levels: <strong>Advanced / Beginner / Intermediate</strong></li>
+</ul>
+
+
+<hr>
+
+<h2>🔍 Search</h2>
+
+<div style="margin: 20px 0;">
+  <input
+    type="text"
+    placeholder="搜索 书名 / 作者 / 分类 / 语言 / 难度"
+    oninput="onSearch(event)"
+    style="width: 100%; padding: 10px; font-size: 16px;"
+  />
+</div>
+
+<div id="search-results"></div>
+
+<script src="search.js"></script>
+
+
+<hr>
+
+<h2>📂 Mathematics</h2>
+
+<h3>🌍 Language: EN</h3>
+
+<h4>⭐ Level: Beginner</h4>
+
+<ul>
+<li><strong>Linear Algebra Done Right</strong> — Sheldon Axler</li>
+</ul>
+<p>  格式：PDF ｜ <a href="https://example.com/linear-algebra">下载链接</a></p>
+
+<ul>
+<li><strong>test</strong> — Sheldon Axler</li>
+</ul>
+<p>  格式：PDF ｜ <a href="https://example.com/linear-algebra">下载链接</a></p>
+
+
+<h2>📂 Programming</h2>
+
+<h3>🌍 Language: EN</h3>
+
+<h4>⭐ Level: Intermediate</h4>
+
+<ul>
+<li><strong>Clean Code</strong> — Robert C. Martin</li>
+</ul>
+<p>  格式：PDF, EPUB ｜ <a href="https://example.com/clean-code">下载链接</a></p>
+
+
+<h3>🌍 Language: ZH</h3>
+
+<h4>⭐ Level: Advanced</h4>
+
+<ul>
+<li><strong>Go 语言设计与实现</strong> — 郝林</li>
+</ul>
+<p>  格式：PDF ｜ <a href="https://example.com/go-design">下载链接</a></p>
+
+
+</body>
+</html>
