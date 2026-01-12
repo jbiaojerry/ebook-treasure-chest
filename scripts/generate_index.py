@@ -1,12 +1,9 @@
-import yaml
 import json
 import re
-from collections import defaultdict
 from pathlib import Path
 
 # 路径定义
 ROOT = Path(__file__).parent.parent
-BOOKS_FILE = ROOT / "metadata" / "books.yaml"
 ALL_BOOKS_FILE = ROOT / "docs" / "all-books.json"
 STATS_FILE = ROOT / "docs" / "parse-stats.json"
 OUTPUT_HTML = ROOT / "docs" / "index.html"
@@ -14,8 +11,7 @@ OUTPUT_JSON = ROOT / "docs" / "books.json"
 
 
 def load_books():
-    """优先从 all-books.json 加载真实数据，如果不存在则从 metadata/books.yaml 加载"""
-    # 优先加载 all-books.json（包含所有 md 文件的数据）
+    """从 all-books.json 加载真实数据"""
     if ALL_BOOKS_FILE.exists():
         try:
             with open(ALL_BOOKS_FILE, "r", encoding="utf-8") as f:
@@ -23,17 +19,12 @@ def load_books():
                 print(f"✅ 从 all-books.json 加载了 {len(books)} 本书籍")
                 return books
         except Exception as e:
-            print(f"⚠️  加载 all-books.json 失败: {e}，降级到 metadata/books.yaml")
+            print(f"❌ 加载 all-books.json 失败: {e}")
+            print(f"💡 提示：请先运行 'python scripts/parse_md_to_json.py' 生成 all-books.json")
+            return []
     
-    # 降级到 metadata/books.yaml
-    if BOOKS_FILE.exists():
-        with open(BOOKS_FILE, "r", encoding="utf-8") as f:
-            data = yaml.safe_load(f)
-            books = data.get("books", [])
-            print(f"ℹ️  从 metadata/books.yaml 加载了 {len(books)} 本书籍（示例数据）")
-            return books
-    
-    print("⚠️  未找到书籍数据文件")
+    print("⚠️  未找到 all-books.json 文件")
+    print(f"💡 提示：请先运行 'python scripts/parse_md_to_json.py' 生成 all-books.json")
     return []
 
 
@@ -909,12 +900,12 @@ def main():
 
     print("✅ index.html & books.json generated")
     
-    # 提示：all-books.json 需要单独运行 parse_md_to_json.py 生成
-    all_books_file = ROOT / "docs" / "all-books.json"
-    if all_books_file.exists():
-        print(f"ℹ️  检测到 all-books.json ({all_books_file.stat().st_size / 1024 / 1024:.2f} MB)")
+    # 检查 all-books.json
+    if ALL_BOOKS_FILE.exists():
+        print(f"ℹ️  检测到 all-books.json ({ALL_BOOKS_FILE.stat().st_size / 1024 / 1024:.2f} MB)")
     else:
-        print("ℹ️  提示：运行 'python scripts/parse_md_to_json.py' 生成 all-books.json")
+        print("⚠️  警告：未找到 all-books.json")
+        print("💡 提示：运行 'python scripts/parse_md_to_json.py' 生成 all-books.json")
 
 
 if __name__ == "__main__":
