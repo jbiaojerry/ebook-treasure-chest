@@ -7,14 +7,45 @@ from pathlib import Path
 # 路径定义
 ROOT = Path(__file__).parent.parent
 BOOKS_FILE = ROOT / "metadata" / "books.yaml"
+ALL_BOOKS_FILE = ROOT / "docs" / "all-books.json"
+STATS_FILE = ROOT / "docs" / "parse-stats.json"
 OUTPUT_HTML = ROOT / "docs" / "index.html"
 OUTPUT_JSON = ROOT / "docs" / "books.json"
 
 
 def load_books():
-    with open(BOOKS_FILE, "r", encoding="utf-8") as f:
-        data = yaml.safe_load(f)
-        return data.get("books", [])
+    """优先从 all-books.json 加载真实数据，如果不存在则从 metadata/books.yaml 加载"""
+    # 优先加载 all-books.json（包含所有 md 文件的数据）
+    if ALL_BOOKS_FILE.exists():
+        try:
+            with open(ALL_BOOKS_FILE, "r", encoding="utf-8") as f:
+                books = json.load(f)
+                print(f"✅ 从 all-books.json 加载了 {len(books)} 本书籍")
+                return books
+        except Exception as e:
+            print(f"⚠️  加载 all-books.json 失败: {e}，降级到 metadata/books.yaml")
+    
+    # 降级到 metadata/books.yaml
+    if BOOKS_FILE.exists():
+        with open(BOOKS_FILE, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+            books = data.get("books", [])
+            print(f"ℹ️  从 metadata/books.yaml 加载了 {len(books)} 本书籍（示例数据）")
+            return books
+    
+    print("⚠️  未找到书籍数据文件")
+    return []
+
+
+def load_stats():
+    """加载统计信息"""
+    if STATS_FILE.exists():
+        try:
+            with open(STATS_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"⚠️  加载统计信息失败: {e}")
+    return None
 
 
 def group_books(books):
@@ -35,21 +66,28 @@ def group_books(books):
     return grouped, categories, languages, levels
 
 
-def render_overview(books, categories, languages, levels):
+def render_overview(total_books, total_categories, languages, levels):
+    # 格式化数字
+    books_display = f"{total_books:,}" if total_books > 1000 else str(total_books)
+    cats_display = f"{total_categories:,}" if total_categories > 1000 else str(total_categories)
+    
+    # 语言显示
+    lang_display = " / ".join(sorted(languages)) if languages else "中文 / 英文"
+    
     return f"""## 📊 统计概览
 
 <div class="overview-stats">
 <div class="stat-item">
 <span>📘 总书籍数</span>
-<strong id="total-books">{len(books)}</strong>
+<strong id="total-books">{books_display}</strong>
 </div>
 <div class="stat-item">
 <span>📂 分类数量</span>
-<strong id="total-categories">{len(categories)}</strong>
+<strong id="total-categories">{cats_display}</strong>
 </div>
 <div class="stat-item">
 <span>🌍 支持语言</span>
-<strong>{' / '.join(sorted(languages))}</strong>
+<strong>{lang_display}</strong>
 </div>
 <div class="stat-item">
 <span>📥 支持格式</span>
@@ -88,8 +126,17 @@ def render_search_ui():
 
 def render_content(grouped):
     lines = []
+    
+    # 限制显示的分类数量（避免页面过长）
+    # 如果分类太多，只显示前20个热门分类
+    sorted_categories = sorted(grouped.keys())
+    max_categories = 20
+    
+    if len(sorted_categories) > max_categories:
+        lines.append(f"*注：共 {len(sorted_categories)} 个分类，以下显示前 {max_categories} 个分类的书籍。使用搜索功能可查找所有书籍。*\n\n")
+        sorted_categories = sorted_categories[:max_categories]
 
-    for category in sorted(grouped.keys()):
+    for category in sorted_categories:
         lines.append(f"## 📂 {category}\n")
 
         for language in sorted(grouped[category].keys()):
@@ -98,15 +145,27 @@ def render_content(grouped):
             for level in sorted(grouped[category][language].keys()):
                 lines.append(f"#### ⭐ Level: {level}\n")
 
-                for b in grouped[category][language][level]:
+                books_list = grouped[category][language][level]
+                # 每个分类-语言-级别组合最多显示10本书
+                max_books_per_section = 10
+                if len(books_list) > max_books_per_section:
+                    books_list = books_list[:max_books_per_section]
+                    lines.append(f"*（共 {len(grouped[category][language][level])} 本，显示前 {max_books_per_section} 本）*\n")
+
+                for b in books_list:
                     formats = ", ".join(b.get("formats", []))
                     lines.append(
-                        f"- **{b['title']}** — {b.get('author', '')}  \n"
+                        f"- **{b['title']}** — {b.get('author', '未知')}  \n"
                         f"  格式：{formats} ｜ "
                         f"[下载链接]({b['link']})\n"
                     )
 
                 lines.append("")
+        
+        lines.append("")
+
+    if len(sorted_categories) < len(grouped.keys()):
+        lines.append(f"\n---\n\n*还有 {len(grouped.keys()) - len(sorted_categories)} 个分类未显示，请使用搜索功能查找。*\n")
 
     return "\n".join(lines)
 
@@ -254,27 +313,30 @@ def generate_html(md_content):
     """生成完整的 HTML 页面"""
     html_body = markdown_to_html(md_content)
     
-    # 尝试加载统计信息
+    # 尝试加载统计信息并生成更新脚本
     stats_info = ""
     try:
         stats_file = ROOT / "docs" / "parse-stats.json"
         if stats_file.exists():
-            import json
             with open(stats_file, 'r', encoding='utf-8') as f:
                 stats = json.load(f)
                 stats_info = f"""
 <script>
-// 更新统计信息
+// 更新统计信息（从 parse-stats.json）
 (function() {{
     const stats = {json.dumps(stats, ensure_ascii=False)};
     const totalBooksEl = document.getElementById('total-books');
     const totalCatsEl = document.getElementById('total-categories');
-    if (totalBooksEl) totalBooksEl.textContent = stats.total_books.toLocaleString() + ' 本';
-    if (totalCatsEl) totalCatsEl.textContent = stats.categories_count.toLocaleString() + ' 个';
+    if (totalBooksEl && stats.total_books) {{
+        totalBooksEl.textContent = stats.total_books.toLocaleString() + ' 本';
+    }}
+    if (totalCatsEl && stats.categories_count) {{
+        totalCatsEl.textContent = stats.categories_count.toLocaleString() + ' 个';
+    }}
 }})();
 </script>"""
-    except:
-        pass
+    except Exception as e:
+        print(f"⚠️  生成统计信息脚本失败: {e}")
     
     html_template = """<!DOCTYPE html>
 <html lang="zh-CN">
@@ -497,12 +559,28 @@ def generate_html(md_content):
 
 def main():
     books = load_books()
+    stats = load_stats()
+    
+    # 如果有统计信息，使用统计信息中的数据
+    if stats:
+        total_books = stats.get("total_books", len(books))
+        total_categories = stats.get("categories_count", len(set(b.get("category", "") for b in books)))
+    else:
+        total_books = len(books)
+        total_categories = len(set(b.get("category", "") for b in books))
+    
     grouped, categories, languages, levels = group_books(books)
+    
+    # 使用统计信息中的分类数量（如果可用）
+    if stats and "categories_count" in stats:
+        categories_count = stats["categories_count"]
+    else:
+        categories_count = len(categories)
 
     md_parts = []
     md_parts.append("# 📚 Ebook Treasure Chest\n")
     md_parts.append("> 自动生成，请勿手动修改\n\n---\n")
-    md_parts.append(render_overview(books, categories, languages, levels))
+    md_parts.append(render_overview(total_books, categories_count, languages, levels))
     md_parts.append("\n---\n")
     md_parts.append(render_search_ui())
     md_parts.append("\n---\n")
