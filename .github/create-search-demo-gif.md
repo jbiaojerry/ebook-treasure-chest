@@ -2,6 +2,28 @@
 
 > **注意**：当前 `.github/search-demo.gif` 是一个占位符。请按照以下步骤创建真实的演示 GIF。
 
+## 🚀 方法 0: 使用自动化脚本（推荐）
+
+我们提供了一个自动化脚本，可以自动访问 GitHub Pages 并生成演示 GIF：
+
+```bash
+# 1. 安装依赖
+pip install playwright Pillow
+playwright install chromium
+
+# 2. 运行脚本
+python scripts/generate_search_demo_gif.py
+```
+
+脚本会自动：
+- ✅ 访问 GitHub Pages 页面
+- ✅ 等待数据加载
+- ✅ 执行多个搜索操作（"文学"、"历史"、"沟通 励志"）
+- ✅ 截图并生成 GIF 动画
+- ✅ 保存到 `.github/search-demo.gif`
+
+**优点**：完全自动化，无需手动操作，可重复执行
+
 ## 方法 1: 使用 Kap（推荐，macOS）
 
 1. 下载并安装 [Kap](https://getkap.co/)
