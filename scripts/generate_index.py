@@ -36,32 +36,51 @@ def group_books(books):
 
 
 def render_overview(books, categories, languages, levels):
-    return f"""## 📊 Overview
+    return f"""## 📊 统计概览
 
-- 📘 Total books: **{len(books)}**
-- 📂 Categories: **{' / '.join(sorted(categories))}**
-- 🌍 Languages: **{' / '.join(sorted(languages))}**
-- ⭐ Levels: **{' / '.join(sorted(levels))}**
+<div class="overview-stats">
+<div class="stat-item">
+<span>📘 总书籍数</span>
+<strong id="total-books">{len(books)}</strong>
+</div>
+<div class="stat-item">
+<span>📂 分类数量</span>
+<strong id="total-categories">{len(categories)}</strong>
+</div>
+<div class="stat-item">
+<span>🌍 支持语言</span>
+<strong>{' / '.join(sorted(languages))}</strong>
+</div>
+<div class="stat-item">
+<span>📥 支持格式</span>
+<strong>EPUB / MOBI / AZW3</strong>
+</div>
+</div>
 """
 
 
 def render_search_ui():
     # 直接写 HTML（GitHub Pages 支持）
-    return """## 🔍 Search
+    return """## 🔍 搜索书籍
 
-<div style="margin: 20px 0;">
+<div class="search-container">
   <input
     type="text"
+    id="search-input"
     placeholder="搜索 书名 / 作者 / 分类（支持多关键词，用空格分隔）"
     oninput="onSearch(event)"
-    style="width: 100%; padding: 10px; font-size: 16px; border: 2px solid #0366d6; border-radius: 4px;"
+    aria-label="搜索书籍"
+    autocomplete="off"
   />
-  <p style="margin-top: 10px; color: #586069; font-size: 14px;">
-    💡 提示：支持搜索书名、作者、分类，可输入多个关键词（用空格分隔）
-  </p>
+  <div class="search-hint">
+    <span>💡</span>
+    <span>支持搜索书名、作者、分类，可输入多个关键词（用空格分隔）</span>
+  </div>
 </div>
 
-<div id="search-results"></div>
+<div id="search-results" role="region" aria-live="polite" aria-label="搜索结果">
+  <div class="loading-indicator">正在加载书籍数据...</div>
+</div>
 
 <script src="search.js"></script>
 """
@@ -235,81 +254,245 @@ def generate_html(md_content):
     """生成完整的 HTML 页面"""
     html_body = markdown_to_html(md_content)
     
+    # 尝试加载统计信息
+    stats_info = ""
+    try:
+        stats_file = ROOT / "docs" / "parse-stats.json"
+        if stats_file.exists():
+            import json
+            with open(stats_file, 'r', encoding='utf-8') as f:
+                stats = json.load(f)
+                stats_info = f"""
+<script>
+// 更新统计信息
+(function() {{
+    const stats = {json.dumps(stats, ensure_ascii=False)};
+    const totalBooksEl = document.getElementById('total-books');
+    const totalCatsEl = document.getElementById('total-categories');
+    if (totalBooksEl) totalBooksEl.textContent = stats.total_books.toLocaleString() + ' 本';
+    if (totalCatsEl) totalCatsEl.textContent = stats.categories_count.toLocaleString() + ' 个';
+}})();
+</script>"""
+    except:
+        pass
+    
     html_template = """<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📚 Ebook Treasure Chest</title>
+    <meta name="description" content="电子书下载宝库 - 汇聚24,000+本电子书，涵盖文学、历史、科普、管理、技术等各个领域。支持epub、mobi、azw3格式，完全免费。">
+    <meta name="keywords" content="电子书下载,免费电子书,epub下载,mobi下载,azw3下载,电子书资源,文学电子书,历史电子书">
+    <meta name="author" content="ebook-treasure-chest">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="📚 电子书下载宝库 - Ebook Treasure Chest">
+    <meta property="og:description" content="汇聚24,000+本电子书，涵盖文学、历史、科普、管理、技术等各个领域">
+    <meta property="og:type" content="website">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="all-books.json" as="fetch" crossorigin>
+    <link rel="preload" href="search.js" as="script">
+    
+    <title>📚 电子书下载宝库 - Ebook Treasure Chest</title>
     <style>
+        * {{
+            box-sizing: border-box;
+        }}
+        
         body {{
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "Microsoft YaHei", sans-serif;
             line-height: 1.6;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
             color: #24292e;
+            background-color: #ffffff;
         }}
+        
+        @media (max-width: 768px) {{
+            body {{
+                padding: 10px;
+            }}
+        }}
+        
         h1, h2, h3, h4 {{
             margin-top: 24px;
             margin-bottom: 16px;
             font-weight: 600;
+            line-height: 1.25;
         }}
-        h1 {{ font-size: 2em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }}
-        h2 {{ font-size: 1.5em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }}
+        
+        h1 {{
+            font-size: 2em;
+            border-bottom: 2px solid #eaecef;
+            padding-bottom: 0.3em;
+            margin-top: 0;
+        }}
+        
+        h2 {{
+            font-size: 1.5em;
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 0.3em;
+        }}
+        
         h3 {{ font-size: 1.25em; }}
         h4 {{ font-size: 1em; }}
+        
         a {{
             color: #0366d6;
             text-decoration: none;
+            transition: color 0.2s ease;
         }}
+        
         a:hover {{
             text-decoration: underline;
+            color: #0056b3;
         }}
+        
+        a:focus {{
+            outline: 2px solid #0366d6;
+            outline-offset: 2px;
+        }}
+        
         blockquote {{
-            padding: 0 1em;
+            padding: 12px 16px;
             color: #6a737d;
             border-left: 0.25em solid #dfe2e5;
-            margin: 0;
+            margin: 16px 0;
+            background-color: #f6f8fa;
+            border-radius: 4px;
         }}
+        
         hr {{
             height: 0.25em;
             padding: 0;
-            margin: 24px 0;
+            margin: 32px 0;
             background-color: #e1e4e8;
             border: 0;
+            border-radius: 2px;
         }}
-        input {{
+        
+        .search-container {{
+            margin: 24px 0;
+            position: relative;
+        }}
+        
+        input[type="text"] {{
             width: 100%;
-            padding: 10px;
+            padding: 12px 16px;
             font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            border: 2px solid #0366d6;
+            border-radius: 6px;
             box-sizing: border-box;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            background-color: #fff;
         }}
+        
+        input[type="text"]:focus {{
+            outline: none;
+            border-color: #0056b3;
+            box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.1);
+        }}
+        
+        input[type="text"]::placeholder {{
+            color: #959da5;
+        }}
+        
+        .search-hint {{
+            margin-top: 10px;
+            color: #586069;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }}
+        
         #search-results {{
-            margin-top: 20px;
+            margin-top: 24px;
+            min-height: 50px;
         }}
-        #search-results p {{
-            margin: 10px 0;
+        
+        .loading-indicator {{
+            text-align: center;
+            padding: 40px 20px;
+            color: #586069;
+            font-size: 16px;
         }}
+        
+        .loading-indicator::before {{
+            content: "⏳ ";
+        }}
+        
         ul {{
             padding-left: 2em;
+            margin: 16px 0;
         }}
+        
         li {{
-            margin: 0.25em 0;
+            margin: 0.5em 0;
         }}
+        
         p {{
             margin: 16px 0;
+        }}
+        
+        .overview-stats {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }}
+        
+        .stat-item {{
+            padding: 16px;
+            background: #f6f8fa;
+            border-radius: 6px;
+            border: 1px solid #e1e4e8;
+        }}
+        
+        .stat-item strong {{
+            display: block;
+            font-size: 1.2em;
+            color: #0366d6;
+            margin-top: 4px;
+        }}
+        
+        @media (max-width: 600px) {{
+            .overview-stats {{
+                grid-template-columns: 1fr;
+            }}
+        }}
+        
+        .footer-note {{
+            margin-top: 40px;
+            padding: 16px;
+            background: #f6f8fa;
+            border-radius: 6px;
+            text-align: center;
+            color: #586069;
+            font-size: 14px;
         }}
     </style>
 </head>
 <body>
+<header>
 {content}
+</header>
+
+<footer class="footer-note">
+    <p>📚 电子书下载宝库 | 自动生成，请勿手动修改</p>
+    <p style="margin-top: 8px; font-size: 12px;">
+        <a href="https://github.com/jbiaojerry/ebook-treasure-chest" target="_blank" rel="noopener">GitHub 仓库</a> |
+        <a href="README.md" target="_blank">使用说明</a>
+    </p>
+</footer>
+{stats_script}
 </body>
 </html>"""
     
-    return html_template.format(content=html_body)
+    return html_template.format(content=html_body, stats_script=stats_info)
 
 
 def main():
