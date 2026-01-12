@@ -3,25 +3,49 @@ let searchTimeout = null;
 const MAX_RESULTS = 100; // 最多显示100条结果
 
 async function loadBooks() {
+  console.log("🔄 开始加载书籍数据...");
+  
   try {
     // 优先加载 all-books.json（包含所有 md 文件的数据）
+    console.log("📥 尝试加载 all-books.json...");
     const res = await fetch("all-books.json");
+    
     if (res.ok) {
-      books = await res.json();
-      console.log(`✅ 已加载 ${books.length} 本书籍`);
+      const data = await res.json();
+      books = data;
+      console.log(`✅ 已加载 ${books.length} 本书籍（来自 all-books.json）`);
+      
+      // 显示加载成功的提示
+      const searchBox = document.querySelector('input[type="text"]');
+      if (searchBox) {
+        const originalPlaceholder = searchBox.placeholder;
+        searchBox.placeholder = `已加载 ${books.length.toLocaleString()} 本书，开始搜索...`;
+        setTimeout(() => {
+          searchBox.placeholder = originalPlaceholder;
+        }, 3000);
+      }
       return;
+    } else {
+      console.warn(`⚠️  all-books.json 返回状态码: ${res.status}`);
     }
   } catch (e) {
-    console.warn("⚠️  all-books.json 加载失败，尝试加载 books.json");
+    console.warn("⚠️  all-books.json 加载失败:", e);
   }
   
   // 降级到 books.json（metadata 数据）
   try {
+    console.log("📥 尝试加载 books.json...");
     const res = await fetch("books.json");
-    books = await res.json();
-    console.log(`✅ 已加载 ${books.length} 本书籍（metadata）`);
+    if (res.ok) {
+      books = await res.json();
+      console.log(`✅ 已加载 ${books.length} 本书籍（来自 books.json，metadata 数据）`);
+      console.warn("💡 提示：建议运行 'python scripts/parse_md_to_json.py' 生成完整的 all-books.json");
+    } else {
+      console.error(`❌ books.json 返回状态码: ${res.status}`);
+    }
   } catch (e) {
     console.error("❌ 无法加载书籍数据", e);
+    alert("⚠️ 无法加载书籍数据，请检查网络连接或刷新页面重试");
   }
 }
 
@@ -120,6 +144,13 @@ function renderResults(results, keyword) {
 function onSearch(e) {
   const keyword = e.target.value.trim();
   
+  // 检查数据是否已加载
+  if (books.length === 0) {
+    const box = document.getElementById("search-results");
+    box.innerHTML = "<p style='padding: 20px; text-align: center; color: #d73a49;'>⏳ 正在加载书籍数据，请稍候...</p>";
+    return;
+  }
+  
   // 清除之前的定时器
   if (searchTimeout) {
     clearTimeout(searchTimeout);
@@ -134,13 +165,16 @@ function onSearch(e) {
   // 防抖：300ms 后执行搜索
   searchTimeout = setTimeout(() => {
     const results = searchBooks(keyword);
+    console.log(`🔍 搜索 "${keyword}" 找到 ${results.length} 条结果`);
     renderResults(results, keyword);
   }, 300);
 }
 
 // 页面加载完成后加载数据
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', loadBooks);
-} else {
-  loadBooks();
-}
+(function() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadBooks);
+  } else {
+    loadBooks();
+  }
+})();
