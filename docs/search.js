@@ -82,7 +82,7 @@ function renderResults(results, keyword) {
   box.innerHTML = "";
 
   if (results.length === 0) {
-    box.innerHTML = "<p style='padding: 20px; text-align: center; color: #666;'>❌ 没有找到相关书籍</p>";
+    box.innerHTML = "<p style='padding: 20px; text-align: center; color: #93a1a1; background: #073642; border-radius: 6px; border: 1px solid #586e75;'>❌ 没有找到相关书籍</p>";
     return;
   }
 
@@ -90,37 +90,57 @@ function renderResults(results, keyword) {
   
   // 显示结果数量
   const countDiv = document.createElement("div");
-  countDiv.style.cssText = "padding: 10px; background: #f6f8fa; border-radius: 4px; margin-bottom: 10px;";
+  countDiv.style.cssText = "padding: 12px 16px; background: #073642; border-radius: 6px; margin-bottom: 16px; border: 1px solid #586e75; color: #2aa198; font-family: 'SF Mono', 'Monaco', monospace;";
   countDiv.innerHTML = `<strong>找到 ${results.length}${results.length === MAX_RESULTS ? '+' : ''} 条结果</strong>`;
   box.appendChild(countDiv);
 
   results.forEach(b => {
     const div = document.createElement("div");
-    div.style.cssText = "padding: 15px; margin: 10px 0; background: #fff; border: 1px solid #e1e4e8; border-radius: 6px;";
+    div.style.cssText = "padding: 16px; margin: 12px 0; background: #073642; border: 1px solid #586e75; border-left: 4px solid #268bd2; border-radius: 6px; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);";
+    
+    // 添加 hover 效果
+    div.addEventListener('mouseenter', function() {
+      this.style.borderLeftColor = '#2aa198';
+      this.style.background = '#002b36';
+      this.style.transform = 'translateX(4px)';
+      this.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)';
+    });
+    div.addEventListener('mouseleave', function() {
+      this.style.borderLeftColor = '#268bd2';
+      this.style.background = '#073642';
+      this.style.transform = 'translateX(0)';
+      this.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.2)';
+    });
     
     const highlightedTitle = highlightText(b.title || "未知", keywordLower);
     const highlightedAuthor = highlightText(b.author || "未知", keywordLower);
     const highlightedCategory = highlightText(b.category || "", keywordLower);
     
     div.innerHTML = `
-      <div style="margin-bottom: 8px;">
-        <strong style="font-size: 16px; color: #0366d6;">${highlightedTitle}</strong>
+      <div style="margin-bottom: 10px;">
+        <strong style="font-size: 16px; color: #93a1a1; font-weight: 600;">${highlightedTitle}</strong>
       </div>
-      <div style="color: #586069; font-size: 14px; margin-bottom: 8px;">
+      <div style="color: #657b83; font-size: 14px; margin-bottom: 10px; font-family: 'SF Mono', 'Monaco', monospace;">
         <span>👤 ${highlightedAuthor}</span>
-        <span style="margin: 0 10px;">|</span>
+        <span style="margin: 0 10px; color: #586e75;">|</span>
         <span>📂 ${highlightedCategory}</span>
       </div>
       <div>
-        <a href="${b.link}" target="_blank" style="
+        <a href="${b.link}" target="_blank" rel="noopener" style="
           display: inline-block;
-          padding: 6px 12px;
-          background: #0366d6;
-          color: white;
+          padding: 6px 14px;
+          background: #268bd2;
+          color: #002b36;
           text-decoration: none;
-          border-radius: 4px;
+          border-radius: 6px;
           font-size: 14px;
-        ">📥 下载</a>
+          font-weight: 600;
+          font-family: 'SF Mono', 'Monaco', monospace;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        " onmouseover="this.style.background='#2aa198'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 8px rgba(42, 161, 152, 0.4)';" 
+           onmouseout="this.style.background='#268bd2'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 4px rgba(0, 0, 0, 0.2)';"
+        >📥 下载</a>
       </div>
     `;
     box.appendChild(div);
@@ -131,10 +151,12 @@ function renderResults(results, keyword) {
     const style = document.createElement('style');
     style.id = 'search-results-style';
     style.textContent = `
-      mark {
-        background: #ffeb3b;
+      #search-results mark {
+        background: #b58900;
+        color: #002b36;
         padding: 2px 4px;
-        border-radius: 2px;
+        border-radius: 3px;
+        font-weight: 600;
       }
     `;
     document.head.appendChild(style);

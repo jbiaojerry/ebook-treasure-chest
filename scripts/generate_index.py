@@ -378,6 +378,26 @@ def generate_html(md_content):
     
     <title>📚 电子书下载宝库 - Ebook Treasure Chest</title>
     <style>
+        /* Solarized Dark Color Palette */
+        :root {{
+            --base03: #002b36;  /* darkest background */
+            --base02: #073642;  /* dark background */
+            --base01: #586e75;  /* dark content */
+            --base00: #657b83;  /* content */
+            --base0: #839496;   /* main content */
+            --base1: #93a1a1;   /* comments */
+            --base2: #eee8d5;   /* light background */
+            --base3: #fdf6e3;   /* lightest background */
+            --yellow: #b58900;
+            --orange: #cb4b16;
+            --red: #dc322f;
+            --magenta: #d33682;
+            --violet: #6c71c4;
+            --blue: #268bd2;
+            --cyan: #2aa198;
+            --green: #859900;
+        }}
+        
         * {{
             box-sizing: border-box;
             margin: 0;
@@ -385,13 +405,13 @@ def generate_html(md_content):
         }}
         
         body {{
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
-            line-height: 1.6;
+            font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Roboto Mono", "Source Code Pro", "Consolas", "Courier New", monospace, "Microsoft YaHei", sans-serif;
+            line-height: 1.7;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            color: #24292e;
-            background: linear-gradient(to bottom, #f6f8fa 0%, #ffffff 200px);
+            color: var(--base0);
+            background: var(--base03);
             min-height: 100vh;
         }}
         
@@ -402,142 +422,149 @@ def generate_html(md_content):
         }}
         
         header {{
-            background: #ffffff;
+            background: var(--base02);
             padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            border: 1px solid var(--base01);
             margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }}
         
         h1 {{
             font-size: 2.5em;
             margin: 0 0 16px 0;
-            background: linear-gradient(135deg, #0366d6 0%, #0056b3 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--cyan);
             font-weight: 700;
             text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.5px;
         }}
         
         h2 {{
             font-size: 1.75em;
             margin: 32px 0 20px 0;
             padding-bottom: 12px;
-            border-bottom: 3px solid #0366d6;
-            color: #24292e;
+            border-bottom: 2px solid var(--blue);
+            color: var(--base1);
             font-weight: 600;
             position: relative;
+            font-family: "SF Mono", "Monaco", monospace;
         }}
         
         h2::before {{
             content: "";
             position: absolute;
             left: 0;
-            bottom: -3px;
+            bottom: -2px;
             width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, #0366d6, #0056b3);
-            border-radius: 2px;
+            height: 2px;
+            background: var(--cyan);
+            border-radius: 1px;
         }}
         
         h3 {{
             font-size: 1.3em;
             margin: 24px 0 12px 0;
-            color: #586069;
+            color: var(--base0);
             font-weight: 500;
+            font-family: "SF Mono", "Monaco", monospace;
         }}
         
         h4 {{
             font-size: 1.1em;
             margin: 16px 0 8px 0;
-            color: #6a737d;
+            color: var(--base00);
             font-weight: 500;
+            font-family: "SF Mono", "Monaco", monospace;
         }}
         
         a {{
-            color: #0366d6;
+            color: var(--blue);
             text-decoration: none;
             transition: all 0.2s ease;
             font-weight: 500;
         }}
         
         a:hover {{
-            color: #0056b3;
+            color: var(--cyan);
             text-decoration: underline;
         }}
         
         a:focus {{
-            outline: 2px solid #0366d6;
+            outline: 2px solid var(--blue);
             outline-offset: 2px;
             border-radius: 2px;
         }}
         
         blockquote {{
             padding: 16px 20px;
-            color: #586069;
-            border-left: 4px solid #0366d6;
+            color: var(--base1);
+            border-left: 4px solid var(--yellow);
             margin: 20px 0;
-            background: linear-gradient(to right, #f6f8fa 0%, #ffffff 100%);
+            background: var(--base02);
             border-radius: 6px;
             font-style: italic;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
         }}
         
         hr {{
             height: 1px;
             margin: 40px 0;
-            background: linear-gradient(90deg, transparent, #e1e4e8, transparent);
+            background: linear-gradient(90deg, transparent, var(--base01), transparent);
             border: 0;
         }}
         
         .search-container {{
             margin: 30px 0;
             position: relative;
-            background: #ffffff;
+            background: var(--base02);
             padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            border: 1px solid var(--base01);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }}
         
         input[type="text"] {{
             width: 100%;
             padding: 14px 18px;
             font-size: 16px;
-            border: 2px solid #d1d9e0;
-            border-radius: 8px;
+            border: 2px solid var(--base01);
+            border-radius: 6px;
             box-sizing: border-box;
             transition: all 0.3s ease;
-            background-color: #ffffff;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            background-color: var(--base03);
+            color: var(--base0);
+            font-family: "SF Mono", "Monaco", monospace;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
         }}
         
         input[type="text"]:hover {{
-            border-color: #0366d6;
-            box-shadow: 0 2px 6px rgba(3, 102, 214, 0.15);
+            border-color: var(--base00);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
         }}
         
         input[type="text"]:focus {{
             outline: none;
-            border-color: #0366d6;
-            box-shadow: 0 0 0 4px rgba(3, 102, 214, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
-            transform: translateY(-1px);
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(38, 139, 210, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            background-color: var(--base02);
         }}
         
         input[type="text"]::placeholder {{
-            color: #959da5;
+            color: var(--base01);
         }}
         
         .search-hint {{
             margin-top: 12px;
-            color: #586069;
+            color: var(--base1);
             font-size: 14px;
             display: flex;
             align-items: center;
             gap: 8px;
             padding: 8px 12px;
-            background: #f6f8fa;
+            background: var(--base03);
             border-radius: 6px;
+            border: 1px solid var(--base01);
         }}
         
         #search-results {{
@@ -548,15 +575,17 @@ def generate_html(md_content):
         .loading-indicator {{
             text-align: center;
             padding: 40px 20px;
-            color: #586069;
+            color: var(--base1);
             font-size: 16px;
-            background: #f6f8fa;
+            background: var(--base02);
             border-radius: 8px;
+            border: 1px solid var(--base01);
         }}
         
         .loading-indicator::before {{
             content: "⏳ ";
             animation: pulse 1.5s ease-in-out infinite;
+            color: var(--yellow);
         }}
         
         @keyframes pulse {{
@@ -573,27 +602,32 @@ def generate_html(md_content):
         li {{
             margin: 12px 0;
             padding: 12px 16px;
-            background: #ffffff;
-            border-left: 3px solid #0366d6;
+            background: var(--base02);
+            border-left: 3px solid var(--blue);
             border-radius: 6px;
             transition: all 0.2s ease;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--base01);
         }}
         
         li:hover {{
             transform: translateX(4px);
-            box-shadow: 0 2px 8px rgba(3, 102, 214, 0.15);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             border-left-width: 4px;
+            border-left-color: var(--cyan);
+            background: var(--base03);
         }}
         
         li strong {{
-            color: #24292e;
+            color: var(--base1);
             font-size: 1.05em;
+            font-weight: 600;
         }}
         
         p {{
             margin: 16px 0;
             line-height: 1.7;
+            color: var(--base0);
         }}
         
         .overview-stats {{
@@ -605,37 +639,38 @@ def generate_html(md_content):
         
         .stat-item {{
             padding: 24px;
-            background: linear-gradient(135deg, #ffffff 0%, #f6f8fa 100%);
-            border-radius: 10px;
-            border: 1px solid #e1e4e8;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            background: var(--base02);
+            border-radius: 8px;
+            border: 1px solid var(--base01);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
             text-align: center;
         }}
         
         .stat-item:hover {{
             transform: translateY(-4px);
-            box-shadow: 0 4px 16px rgba(3, 102, 214, 0.15);
-            border-color: #0366d6;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+            border-color: var(--cyan);
+            background: var(--base03);
         }}
         
         .stat-item span {{
             display: block;
             font-size: 14px;
-            color: #586069;
+            color: var(--base1);
             margin-bottom: 8px;
             font-weight: 500;
+            font-family: "SF Mono", "Monaco", monospace;
         }}
         
         .stat-item strong {{
             display: block;
             font-size: 1.8em;
-            background: linear-gradient(135deg, #0366d6 0%, #0056b3 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--cyan);
             font-weight: 700;
             margin-top: 4px;
+            font-family: "SF Mono", "Monaco", monospace;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }}
         
         @media (max-width: 600px) {{
@@ -654,115 +689,158 @@ def generate_html(md_content):
         }}
         
         .category-section {{
-            background: #ffffff;
+            background: var(--base02);
             padding: 24px;
             margin: 24px 0;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--base01);
             transition: all 0.3s ease;
         }}
         
         .category-section:hover {{
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-            border-color: #0366d6;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+            border-color: var(--cyan);
         }}
         
         .book-item {{
             padding: 16px;
             margin: 12px 0;
-            background: #f6f8fa;
-            border-radius: 8px;
-            border-left: 4px solid #0366d6;
+            background: var(--base03);
+            border-radius: 6px;
+            border-left: 4px solid var(--blue);
+            border: 1px solid var(--base01);
+            border-left-width: 4px;
             transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }}
         
         .book-item:hover {{
-            background: #e8f4fd;
+            background: var(--base02);
             transform: translateX(4px);
-            box-shadow: 0 2px 8px rgba(3, 102, 214, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-left-color: var(--cyan);
         }}
         
         .book-item strong {{
-            color: #24292e;
+            color: var(--base1);
             font-size: 1.05em;
             display: block;
             margin-bottom: 6px;
+            font-weight: 600;
         }}
         
         .book-item .book-meta {{
-            color: #586069;
+            color: var(--base00);
             font-size: 0.9em;
             margin: 8px 0;
+            font-family: "SF Mono", "Monaco", monospace;
         }}
         
         .book-item .book-link {{
             display: inline-block;
             margin-top: 8px;
             padding: 6px 14px;
-            background: #0366d6;
-            color: #ffffff !important;
+            background: var(--blue);
+            color: var(--base03) !important;
             border-radius: 6px;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 0.2s ease;
             text-decoration: none !important;
+            font-family: "SF Mono", "Monaco", monospace;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }}
         
         .book-item .book-link:hover {{
-            background: #0056b3;
+            background: var(--cyan);
             transform: translateY(-1px);
-            box-shadow: 0 2px 6px rgba(3, 102, 214, 0.3);
+            box-shadow: 0 4px 8px rgba(42, 161, 152, 0.4);
+            color: var(--base03) !important;
         }}
         
         .note-text {{
             padding: 12px 16px;
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
+            background: var(--base02);
+            border-left: 4px solid var(--yellow);
             border-radius: 6px;
-            color: #856404;
+            color: var(--yellow);
             font-size: 14px;
             margin: 20px 0;
+            border: 1px solid var(--base01);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            font-family: "SF Mono", "Monaco", monospace;
         }}
         
         .footer-note {{
             margin-top: 60px;
             padding: 24px;
-            background: linear-gradient(135deg, #f6f8fa 0%, #ffffff 100%);
-            border-radius: 12px;
+            background: var(--base02);
+            border-radius: 8px;
             text-align: center;
-            color: #586069;
+            color: var(--base1);
             font-size: 14px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            border-top: 3px solid #0366d6;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border-top: 3px solid var(--cyan);
+            border: 1px solid var(--base01);
+            border-top-width: 3px;
         }}
         
         .footer-note a {{
             margin: 0 8px;
             padding: 4px 8px;
             border-radius: 4px;
+            color: var(--blue);
         }}
         
         .footer-note a:hover {{
-            background: #e8f4fd;
+            background: var(--base03);
             text-decoration: none;
+            color: var(--cyan);
         }}
         
-        /* 滚动条样式 */
+        /* 滚动条样式 - Solarized Dark */
         ::-webkit-scrollbar {{
-            width: 10px;
+            width: 12px;
         }}
         
         ::-webkit-scrollbar-track {{
-            background: #f1f1f1;
+            background: var(--base03);
         }}
         
         ::-webkit-scrollbar-thumb {{
-            background: #0366d6;
-            border-radius: 5px;
+            background: var(--base01);
+            border-radius: 6px;
+            border: 2px solid var(--base03);
         }}
         
         ::-webkit-scrollbar-thumb:hover {{
-            background: #0056b3;
+            background: var(--base00);
+        }}
+        
+        /* 代码风格字体优化 */
+        code {{
+            background: var(--base02);
+            color: var(--green);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: "SF Mono", "Monaco", monospace;
+            font-size: 0.9em;
+            border: 1px solid var(--base01);
+        }}
+        
+        /* 强调文本 */
+        strong {{
+            color: var(--base1);
+            font-weight: 600;
+        }}
+        
+        /* 链接特殊样式 */
+        a[href^="http"] {{
+            color: var(--blue);
+        }}
+        
+        a[href^="http"]:hover {{
+            color: var(--cyan);
         }}
     </style>
 </head>
