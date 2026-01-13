@@ -19,6 +19,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取完整历史，避免推送冲突
 
       - uses: actions/setup-python@v5
         with:
@@ -50,4 +52,30 @@ jobs:
           git add docs/index.html docs/books.json docs/all-books.json docs/parse-stats.json docs/search.js
           git rm docs/index.md 2>/dev/null || true
           git commit -m "auto: update index and search data" || echo "No changes"
-          git push
+          
+          # 在推送前先拉取远程更改（避免推送冲突）
+          echo "📥 拉取远程最新更改..."
+          git fetch origin main
+          git pull origin main --rebase || git pull origin main --no-rebase || true
+          
+          # 推送更改（最多重试3次）
+          max_retries=3
+          retry_count=0
+          while [ $retry_count -lt $max_retries ]; do
+            if git push origin main; then
+              echo "✅ 推送成功"
+              break
+            else
+              retry_count=$((retry_count + 1))
+              echo "⚠️  推送失败，重试 $retry_count/$max_retries..."
+              if [ $retry_count -lt $max_retries ]; then
+                # 重新拉取并合并
+                git fetch origin main
+                git rebase origin/main || git merge origin/main || true
+                sleep 2
+              else
+                echo "❌ 推送失败，已达到最大重试次数"
+                exit 1
+              fi
+            fi
+          done

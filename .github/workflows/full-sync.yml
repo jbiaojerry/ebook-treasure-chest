@@ -19,6 +19,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0  # 获取完整历史，避免推送冲突
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -60,7 +61,33 @@ jobs:
             # 添加所有变更（md目录、README.md、all_books.json等）
             git add md/ README.md docs/all-books.json docs/parse-stats.json || true
             git commit -m "auto: full sync books and update README [skip ci]" || echo "No changes to commit"
-            git push
+            
+            # 在推送前先拉取远程更改（避免推送冲突）
+            echo "📥 拉取远程最新更改..."
+            git fetch origin main
+            git pull origin main --rebase || git pull origin main --no-rebase || true
+            
+            # 推送更改（最多重试3次）
+            max_retries=3
+            retry_count=0
+            while [ $retry_count -lt $max_retries ]; do
+              if git push origin main; then
+                echo "✅ 推送成功"
+                break
+              else
+                retry_count=$((retry_count + 1))
+                echo "⚠️  推送失败，重试 $retry_count/$max_retries..."
+                if [ $retry_count -lt $max_retries ]; then
+                  # 重新拉取并合并
+                  git fetch origin main
+                  git rebase origin/main || git merge origin/main || true
+                  sleep 2
+                else
+                  echo "❌ 推送失败，已达到最大重试次数"
+                  exit 1
+                fi
+              fi
+            done
           else
             echo "No changes to commit"
           fi
